@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class Maestra(models.Model):
     nombre_producto = models.CharField(max_length=300)
     numero_sku = models.IntegerField()
@@ -10,7 +9,6 @@ class Maestra(models.Model):
         return f'Nombre Producto: {self.nombre_producto}   /   Sku: {self.numero_sku}   /   Categoría: {self.categoria}'
 
 class Inventario(models.Model):
-    #producto = models.ForeignKey(Maestra, on_delete=models.CASCADE)
     sku = models.ForeignKey(Maestra, on_delete=models.CASCADE)
     unidades = models.IntegerField()
     
@@ -28,6 +26,7 @@ class Recepcion(models.Model):
 class Salida(models.Model):
     sku_out = models.ForeignKey(Maestra, on_delete=models.CASCADE)
     unidades_out = models.IntegerField()
+    orden_venta = models.CharField(max_length=100)
     
     def __str__(self):
-        return f'Sku: {self.sku_out}   /   Unidades: {self.unidades_out}'
+        return f'Sku: {self.sku_out}   /   Unidades: {self.unidades_out}  /  OC: {self.orden_venta}'
