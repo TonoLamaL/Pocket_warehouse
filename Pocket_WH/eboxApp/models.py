@@ -29,9 +29,9 @@ class Salida(models.Model):
 
 class Inventario(models.Model):
     ''' Tabla de inventario disponible en el sistema'''
-    sku = models.ForeignKey(Maestra, on_delete=models.CASCADE)
-    unidades = models.IntegerField()
+    sku = models.ForeignKey(Maestra, on_delete=models.CASCADE, null=True)
+    tot_unidades = models.IntegerField(null=True)
     
     def __str__(self):
-        return f'Sku: {self.sku}   /   Unidades: {self.unidades} / Pk = {self.pk}'
+        return f'Sku: {self.sku}   /   Unidades: {self.tot_unidades} / Pk = {self.pk}'
     
