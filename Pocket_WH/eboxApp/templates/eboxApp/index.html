@@ -1,0 +1,41 @@
+
+{% extends "eboxApp/base.html" %}
+    {% load static %}
+
+{% block texto_sobre_imagen %}
+                        
+    <!-- <h1 class="mb-5">Aplicación Web con Django para EBOX Fulfillment!</h1> -->
+
+{% endblock %}
+
+
+{% block contenido_que_cambia %}
+
+    <!-- esto es lo que va a cambiar-->
+    <br>
+    <h1 align="center">EBOX Fulfillment  </h1>
+    <p align = "justify"> 
+        <div class="container">  
+            <br>Ebox nace en julio del año 2020 de la mano de una oportunidad, y la necesidad de muchas empresas por cumplir con las exigencias de entrega que demandaba la pandemia.
+            <br>Con 3.000 m² de superficie disponible, hemos diseñado un sistema de preparación de pedidos fulfillment que permite tercerizar la operación logística de manera segura y eficaz.<br>
+            <br>Somos el intermediario entre el fabricante y sus clientes.<br>
+            <br>Almacenamos tus productos, organizamos las operaciones de transporte, entregamos trazabilidad de mercancías con stock en línea, nos encargamos de las operaciones del almacén como la preparación de pedidos, inventarios y logística inversa.
+            <br> Realizamos picking y packing de bajos y altos volúmenes, almacenamos todo tipo de mercancías en nuestros racks paletizados y estanterías previamente georreferenciados para dar agilidad a la operación.
+         </div>
+    </p>
+    <br>
+    <br>
+    <h3 align="center"> Nuestros servicios </h3>
+    
+    <p>
+        <div class="container">     
+            <li>Recepción de mercadería : Cargamos tu orden de compra y luego confirmamos las unidades recibidas. Te informamos las diferencias para que mantengas en orden tu inventario en los portales de venta.</li>
+            <li>Ingresamos el stock en línea: Puedes monitorear el stock en la web.</li>
+            <li>Almacenamos en racks y estanterías georreferenciadas en nuestro WMS.</li>
+            <li>Recibimos tus ventas de manera directa por integración: Nos integramos con tu plataforma u otros portales de venta.</li>
+            <li>Picking & Packing: Trazamos cada estado del pedido.</li>
+            <li>Entregamos al transporte que corresponda o que tu prefieras.</li>
+        </div>
+    </p>
+
+    {% endblock %}
