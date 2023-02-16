@@ -9,25 +9,26 @@
 {% block contenido_que_cambia %}
 
 <div class="container" align="center">
-    <h1 class="mb-5">Resultado de tu busqueda - lista completa de la maestra >_</h1> 
+    <br>
+    <h1 class="mb-5">Maestra de productos completa >_</h1> 
     {% if producto %}
 
                     <table> 
                         <tr>
-                            <th><h3>ID</h3></th>
-                            <th><h3>Producto</h3></th>
-                            <th><h3>Sku</h3></th>
-                            <th><h3>Categoría</h3></th>
+                            <th style="text-align: left"><h3>ID</h3></th>
+                            <th style="text-align: left"><h3>Producto</h3></th>
+                            <th style="text-align: left"><h3>Sku</h3></th>
+                            <th style="text-align: left"><h3>Categoría</h3></th>
                             
                         </tr>
 
                         {% for i in producto %}
 
                         <tr>
-                            <td><h6>{{i.pk}}</h6></td>
-                            <td><h6>{{i.nombre_producto}}</h6></td>
-                            <td><h6>{{i.numero_sku}}</h6></td>
-                            <td><h6>{{i.categoria}}</h6></td>
+                            <td style="text-align: left"><h6>{{i.pk}}</h6></td>
+                            <td style="text-align: left"><h6>{{i.nombre_producto}}</h6></td>
+                            <td style="text-align: left"><h6>{{i.numero_sku}}</h6></td>
+                            <td style="text-align: left"><h6>{{i.categoria}}</h6></td>
                         </tr>
                         {% endfor %}
 
