@@ -2,12 +2,12 @@
     {% load static %}
 {% block contenido_que_cambia %}
     <br>
-    <h2 align="center"> <!--FORMULARIO CREADO CON API DJANGO--> </h2>
+    <h2 align="center"> + PRODUCTOS </h2>
     <br>
     <br>
     
     <div class="container">
-        <h3> Agrega productos a tu maestra >_</h3>
+        <h3>1.- Agrega productos a tu maestra >_</h3>
         <br>
         {% if maestra_prod.errors %}
         <p style="color: red;"> Estan mal los datos, revisar</p>
@@ -28,5 +28,34 @@
 
         </form>
     </div>
+    <br>   
+    <br>
+    <br>
+    <div class="container">
+        <h3>2.- Busca tu producto por su nombre >_</h3>
+        <br>
+        <form action="wMaestra_list/" method "GET"> <!-- buscar es un nuevo path-->
+            <div class= "form-group">
+                <label for="disabledTextInput">Nombre:</label>
+                <input class = "form-control" type="text" name="nombre_producto" id="disabledTextInput" placeholder="Nombre_producto" required>
+            </div>
+            <br>
+            <button type="submit" class = "btn btn-primary">Enviar</button>
+            <br>
+        </form>
+    </div>
+</div>
+<br>   
+<br>
+<br>
+<div class="container">
+    <h3>3.- Buscar todo >_</h3>
+    <br>
+    <form action="wMaestra_full/" method "GET"> <!-- buscar es un nuevo path-->
+
+        <button type="submit" class = "btn btn-primary">Buscar</button>
+        <br>
+    </form>
+</div>
 
 {% endblock %}
