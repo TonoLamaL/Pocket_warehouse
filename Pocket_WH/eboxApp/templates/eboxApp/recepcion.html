@@ -21,6 +21,7 @@
                 {{recepcion_prod.as_table}}
 
             </div>
+            * solo se pueden seleccionar los productos creados en la maestra
             <br>
 
             <button type="submit" class = "btn btn-primary">Enviar</button>
@@ -30,6 +31,16 @@
     </div>
     <br>   
     <br>
+    <br>   
+    <div class="container">
+        <h3>2.- Buscar todo >_</h3>
+        <br>
+        <form action="wRecepcion_full/" method "GET"> <!-- buscar es un nuevo path-->
+
+            <button type="submit" class = "btn btn-primary">Buscar</button>
+            <br>
+        </form>
+    </div>
    
 
 {% endblock %}

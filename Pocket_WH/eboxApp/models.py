@@ -7,7 +7,7 @@ class Maestra(models.Model):
     categoria = models.CharField(max_length=300)
 
     def __str__(self):
-        return f'Nombre Producto: {self.nombre_producto}   /   Sku: {self.numero_sku}   /   Categoría: {self.categoria} / Pk = {self.pk}'
+        return f'{self.pk} (PK) | Nombre Producto: {self.nombre_producto}   |   Sku: {self.numero_sku}   |   Categoría: {self.categoria}'
 
 class Recepcion(models.Model):
     ''' Tabla de ingresos de mercadería al sistema por recepciones (deberia sumar unidades al disponible en el sistema)'''
@@ -16,7 +16,7 @@ class Recepcion(models.Model):
     unidades_in = models.IntegerField()
     
     def __str__(self):
-        return f'Contenedor: {self.num_contenedor}   /   Sku: {self.sku_in}   /   Unidades: {self.unidades_in} / Pk = {self.pk}'
+        return f'{self.pk} (PK) |Contenedor: {self.num_contenedor}   |   Sku: {self.sku_in}   |   Unidades: {self.unidades_in} '
 
 class Salida(models.Model):
     ''' Tabla de ventas cargadas en el sistema que deben descontar unidades del inventario'''
@@ -25,7 +25,7 @@ class Salida(models.Model):
     orden_venta = models.CharField(max_length=100)
     
     def __str__(self):
-        return f'Sku: {self.sku_out}   /   Unidades: {self.unidades_out}  /  OC: {self.orden_venta} / Pk = {self.pk}'
+        return f'{self.pk} (PK) | Sku: {self.sku_out}   |   Unidades: {self.unidades_out}  |  OC: {self.orden_venta} | Pk = {self.pk}'
 
 class Inventario(models.Model):
     ''' Tabla de inventario disponible en el sistema'''
@@ -33,5 +33,5 @@ class Inventario(models.Model):
     tot_unidades = models.IntegerField(null=True)
     
     def __str__(self):
-        return f'Sku: {self.sku}   /   Unidades: {self.tot_unidades} / Pk = {self.pk}'
+        return f'{self.pk} (PK) | Sku: {self.sku}   |   Unidades: {self.tot_unidades} | Pk = {self.pk}'
     

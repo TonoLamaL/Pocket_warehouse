@@ -8,6 +8,6 @@ class MaestraForm(forms.Form):
     
 class RecepcionForm(forms.Form):
     num_contenedor = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),label='N° Contenedor',max_length=100)
-    sku_in = forms.ModelChoiceField(queryset=Maestra.objects.all(),label='Sku', widget=forms.Select(attrs={'class': 'form-control'})) #sku_in = forms.ModelChoiceField(queryset=Maestra.objects.filter( numero_sku__gt = 0),label='Sku', widget=forms.Select(attrs={'class': 'form-control'}))
+    sku_in = forms.ModelChoiceField(queryset=Maestra.objects.all(),label='Sku *', widget=forms.Select(attrs={'class': 'form-control'})) #sku_in = forms.ModelChoiceField(queryset=Maestra.objects.filter( numero_sku__gt = 0),label='Sku', widget=forms.Select(attrs={'class': 'form-control'}))
     unidades_in = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}),label='Unidades a Ingresar',max_value=99999999999)
     

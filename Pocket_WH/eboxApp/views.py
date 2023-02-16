@@ -66,6 +66,13 @@ def recepcion(request):
     
     return render(request, 'eboxApp/recepcion.html', {'recepcion_prod':recepcion_prod})
 
+def buscarRecepcion(request):
+    ''' Boton de busqueda completa de las recepciones con respuesta en una lista - te llevo a una ventana distinta con boton volver'''
+    if request.method == 'GET': # si existe un post
+        recepciones = Recepcion.objects.all()
+        
+        return render(request, 'eboxApp/wRecepcion_full.html', {'recepciones':recepciones })
+
 # CREACIÓN DE ORDENES
 
 # KARDEX 
