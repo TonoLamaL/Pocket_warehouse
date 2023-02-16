@@ -1,0 +1,32 @@
+{% extends "eboxApp/base.html" %}
+    {% load static %}
+{% block contenido_que_cambia %}
+    <br>
+    <h2 align="center"> <!--FORMULARIO CREADO CON API DJANGO--> </h2>
+    <br>
+    <br>
+    
+    <div class="container">
+        <h3> Agrega productos a tu maestra >_</h3>
+        <br>
+        {% if maestra_prod.errors %}
+        <p style="color: red;"> Estan mal los datos, revisar</p>
+        {% endif %}
+
+        <form method='POST'>
+            {% csrf_token %}
+            <!-- Aca esta la magia de Django -->
+            <div class="form-group">
+
+                {{maestra_prod.as_table}}
+
+            </div>
+            <br>
+
+            <button type="submit" class = "btn btn-primary">Enviar</button>
+
+
+        </form>
+    </div>
+
+{% endblock %}
