@@ -11,3 +11,9 @@ class RecepcionForm(forms.Form):
     sku_in = forms.ModelChoiceField(queryset=Maestra.objects.all(),label='Sku *', widget=forms.Select(attrs={'class': 'form-control'})) #sku_in = forms.ModelChoiceField(queryset=Maestra.objects.filter( numero_sku__gt = 0),label='Sku', widget=forms.Select(attrs={'class': 'form-control'}))
     unidades_in = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}),label='Unidades a Ingresar',max_value=99999999999)
     
+
+class EgresoForm(forms.Form):
+    orden_venta = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),label='N° Orden de venta',max_length=100)
+    sku_out = forms.ModelChoiceField(queryset=Maestra.objects.all(),label='Sku *', widget=forms.Select(attrs={'class': 'form-control'})) 
+    unidades_out = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}),label='Unidades vendidas',max_value=99999999999)
+    

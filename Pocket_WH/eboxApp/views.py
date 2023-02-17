@@ -33,7 +33,7 @@ def buscarProducto(request):
     ''' Formulario para buscar un producto en especifico por su nombre - te llevo a una ventana distinta con boton volver'''
     if request.method == 'GET': # si existe un post
         busqueda = request.GET['nombre_producto']
-        busqueda = busqueda.lower()
+        #busqueda = busqueda.lower()
         producto = Maestra.objects.filter(nombre_producto = busqueda)
         
         return render(request, 'eboxApp/wMaestra_list.html', {'producto':producto , 'busqueda':busqueda })
@@ -74,7 +74,37 @@ def buscarRecepcion(request):
         return render(request, 'eboxApp/wRecepcion_full.html', {'recepciones':recepciones })
 
 # CREACIÓN DE ORDENES
+def egreso(request):
+    " Formulario para crear un egreso que tiene que salir productos al inventario"
+    if request.method == 'POST': # si existe un post
+        egreso_prod = EgresoForm(data=request.POST)
+        print (egreso_prod)
+        
+        # una validacion que pide django ({% csrf_token %})
+        if egreso_prod.is_valid():
+            informacion = egreso_prod.cleaned_data
+            nueva_salida = Salida(orden_venta = informacion['orden_venta'], sku_out = informacion['sku_out'], unidades_out = informacion['unidades_out']) # son los argumentos de la clase y la guardo en el objeto     
+            nueva_salida.save()
+            return render(request, 'eboxApp/windowsConfirm.html') # una vez que se guardo que retorne a la pagina de confrimación, y desde la confirmacion window hice un html que me retorna a inicio
 
+    else:
+        egreso_prod = EgresoForm()
+    
+    return render(request, 'eboxApp/egreso.html', {'egreso_prod':egreso_prod})
+
+def buscarEgreso(request):
+    ''' Boton de busqueda completa de las ordenes de compra con respuesta en una lista - te llevo a una ventana distinta con boton volver'''
+    if request.method == 'GET': # si existe un post
+        salidas = Salida.objects.all()
+        
+        return render(request, 'eboxApp/wEgreso_full.html', {'salidas':salidas })
+
+
+# class EgresoForm(forms.Form):
+#     orden_venta = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),label='N° Orden de venta',max_length=100)
+#     sku_out = forms.ModelChoiceField(queryset=Maestra.objects.all(),label='Sku *', widget=forms.Select(attrs={'class': 'form-control'})) 
+#     unidades_out = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}),label='Unidades vendidas',max_value=99999999999)
+    
 # KARDEX 
 
 # INVENTARIO
