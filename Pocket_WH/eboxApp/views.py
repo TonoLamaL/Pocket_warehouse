@@ -107,7 +107,3 @@ def buscarEgreso(request):
 
 # KARDEX 
 
-# INVENTARIO
-def sumaRecepcion(request,sku_in_id):
-    agregar = get_object_or_404(Recepcion, sku_in_id)
-    

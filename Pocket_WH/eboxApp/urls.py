@@ -12,5 +12,4 @@ urlpatterns = [
     path('recepcion/wRecepcion_full/', views.buscarRecepcion, name = 'buscarTodoRecepcion'),
     path('egreso/', views.egreso, name = 'Egreso'),
     path('egreso/wEgreso_full/', views.buscarEgreso, name = 'buscarTodoEgreso'),
-    
 ]

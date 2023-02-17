@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
 
 class Maestra(models.Model):
     ''' Tabla de creación de maestra de productos del inventario para el sistema'''
@@ -18,12 +19,17 @@ class Recepcion(models.Model):
     def __str__(self):
         return f'{self.pk} (PK) |Contenedor: {self.num_contenedor}   |   Sku: {self.sku_in}   |   Unidades: {self.unidades_in} '
 
-    # @classmethod
-    # def unidades(cls):
-    #     return cls.unidades_in
-    def entregar_unidades(self):
-        return self.unidades_in
-        
+    def save(self, *args, **kwargs):
+        super(Recepcion, self).save(*args, **kwargs)
+
+        try:
+            inventario = Inventario.objects.get(sku=self.sku_in)
+            inventario.tot_unidades += self.unidades_in
+            inventario.save()
+        except ObjectDoesNotExist:
+            Inventario.objects.create(sku=self.sku_in, tot_unidades=self.unidades_in)
+            
+
     
 class Salida(models.Model):
     ''' Tabla de ventas cargadas en el sistema que deben descontar unidades del inventario'''
@@ -33,6 +39,17 @@ class Salida(models.Model):
     
     def __str__(self):
         return f'{self.pk} (PK) | Sku: {self.sku_out}   |   Unidades: {self.unidades_out}  |  OC: {self.orden_venta} | Pk = {self.pk}'
+    
+    def save(self, *args, **kwargs):
+        super(Salida, self).save(*args, **kwargs)
+
+        try:
+            inventario = Inventario.objects.get(sku=self.sku_out)
+            inventario.tot_unidades -= self.unidades_out
+            inventario.save()
+        except ObjectDoesNotExist:
+            Inventario.objects.create(sku=self.sku_out, tot_unidades=self.unidades_out)
+            
 
 class Inventario(models.Model):
     ''' Tabla de inventario disponible en el sistema'''
