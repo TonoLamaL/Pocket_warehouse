@@ -17,7 +17,9 @@
                         <tr>
                             <th style="text-align: left"><h3>ID</h3></th>
                             <th style="text-align: left"><h3>Contenedor</h3></th>
-                            <th style="text-align: left"><h3>Sku</h3></th>
+                            <th style="text-align: left">ID de producto</th>
+                            <th style="text-align: left">SKU</th>
+                            <th style="text-align: left">Nombre del producto</th>
                             <th style="text-align: left"><h3>Unidades</h3></th>
                             
                         </tr>
@@ -27,7 +29,9 @@
                         <tr>
                             <td style="text-align: left"><h6>{{i.pk}}</h6></td>
                             <td style="text-align: left"><h6>{{i.num_contenedor}}</h6></td>
-                            <td style="text-align: left"><h6>{{i.sku_in}}</h6></td>
+                            <td style="text-align: left"><h6>{{i.sku_in.id}}</h6></td>
+                            <td style="text-align: left"><h6>{{i.sku_in.numero_sku}}</h6></td>
+                            <td style="text-align: left"><h6>{{i.sku_in.nombre_producto}}</h6></td>
                             <td style="text-align: left"><h6>{{i.unidades_in}}</h6></td>
 
                         </tr>

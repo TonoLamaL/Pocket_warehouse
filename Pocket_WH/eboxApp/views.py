@@ -1,5 +1,4 @@
-from django.shortcuts import render, get_object_or_404
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from eboxApp.models import *
 from eboxApp.forms import *
@@ -10,6 +9,7 @@ def index(request):
 
 
 # MAESTRA 
+
 def maestra(request):
     ''' Formulario para crear nuevos productos en la maestra de productos - te llevo a una ventana distinta con boton volver'''
     if request.method == 'POST': # si existe un post
@@ -105,5 +105,65 @@ def buscarEgreso(request):
 
 
 
-# KARDEX 
+# INVENTARIO
 
+
+def stock_en_linea(request):
+    '''funcion para revisar el stock en linea - esta es solo para mostrar - las funciones son
+    parte de las clases Recepcion y Salida '''
+    inventarios = Inventario.objects.all()
+    return render(request, 'eboxApp/stock_en_linea.html', {'inventarios': inventarios})
+ 
+ 
+ # FUNCIONES DE USO INTENRO AQUI ABAJO
+'''
+IR AL SHELL DE DJANGO Y EJECUTAR
+
+from eboxApp.views import migrar_inventario, actualizar_inventariof
+
+migrar_inventario()
+actualizar_inventario()
+'''
+
+def actualizar_inventario():#agregar request si quiero que sea desde una web:
+    '''funcion para actualizar el inventario en unidades - lo necesitaba porque la ultima clase que cree fue inventario'''
+    inventario = Inventario.objects.all()
+    for inv in inventario:
+        # Aquí se actualiza el valor de tot_unidades para cada registro de inventario
+        inv.tot_unidades = inv.sku.recepcion_set.aggregate(models.Sum('unidades_in'))['unidades_in__sum'] - inv.sku.salida_set.aggregate(models.Sum('unidades_out'))['unidades_out__sum']
+        inv.save()
+
+    #return HttpResponse ('eboxApp/actualizar_inventario.html')
+
+def migrar_inventario():
+    '''Función que actualiza el inventario a partir de los registros en las tablas de Recepcion y Salida
+    - lo necesitaba porque la ultima clase que cree fue inventario'''
+
+    # Recorrer los objetos de Recepcion
+    for recepcion in Recepcion.objects.all():
+        sku = recepcion.sku_in
+        unidades = recepcion.unidades_in
+        try:
+            inventario = Inventario.objects.get(sku=sku)
+            inventario.tot_unidades += unidades
+        except Inventario.DoesNotExist:
+            inventario = Inventario(sku=sku, tot_unidades=unidades)
+        inventario.save()
+
+    # Recorrer los objetos de Salida
+    for salida in Salida.objects.all():
+        sku = salida.sku_out
+        unidades = salida.unidades_out
+        try:
+            inventario = Inventario.objects.get(sku=sku)
+            inventario.tot_unidades -= unidades
+        except Inventario.DoesNotExist:
+            inventario = Inventario(sku=sku, tot_unidades=-unidades)
+        inventario.save()
+
+'''
+recepcion_set es una referencia a la relación inversa de la clase Maestra con la clase Recepcion. En Django, cuando se define una clave foránea en una clase, se crea automáticamente una relación inversa en la clase relacionada.
+
+En este caso, como la clase Recepcion tiene una clave foránea a Maestra, se creó automáticamente un atributo en Maestra llamado recepcion_set que puede ser utilizado para acceder a todas las instancias de Recepcion que tienen una clave foránea a esa instancia de Maestra.
+
+Por ejemplo, si tienes una instancia maestra de Maestra, puedes acceder a todas las instancias de Recepcion que tienen una clave foránea a esa instancia utilizando el atributo maestra.recepcion_set.all().'''

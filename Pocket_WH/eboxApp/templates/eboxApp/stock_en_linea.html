@@ -1,0 +1,42 @@
+{% extends "eboxApp/base.html" %}
+    {% load static %}
+    
+{% block texto_sobre_imagen %}
+
+
+{% endblock %} 
+
+{% block contenido_que_cambia %}
+
+    <div class="container" align="center">
+        <br>
+        <h1 class="mb-5">Stock en línea >_</h1> 
+        <p>El stock se actualiza en linea mientras gestionas tus ingresos/recepciones y tus ventas/egresos</p>
+        <table>
+            <thead>
+                <tr>
+                    <th style="text-align: left">ID de producto</th>
+                    <th style="text-align: left">SKU</th>
+                    <th style="text-align: left">Nombre del producto</th>
+                    <th style="text-align: left">Categoria</th>
+                    <th style="text-align: left">Unidades disponibles</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for inventario in inventarios %}
+                    <tr>
+                        <td style="text-align: left">{{ inventario.sku.id }}</td>
+                        <td style="text-align: left">{{ inventario.sku.numero_sku }}</td>
+                        <td style="text-align: left">{{ inventario.sku.nombre_producto }}</td>
+                        <td style="text-align: left">{{ inventario.sku.categoria }}</td>
+                        <td style="text-align: left">{{ inventario.tot_unidades }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+</div>
+{% endblock %}
+

@@ -11403,3 +11403,8 @@ footer.footer {
   position: fixed;
   z-index: 999;
 }
+
+/* para que queden las tablas tipo cebra */
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}

@@ -20,6 +20,7 @@ class Recepcion(models.Model):
         return f'{self.pk} (PK) |Contenedor: {self.num_contenedor}   |   Sku: {self.sku_in}   |   Unidades: {self.unidades_in} '
 
     def save(self, *args, **kwargs):
+        '''funcion para actualizar en linea las unidades segun las recepciones a la base de datos de inventario por sku'''
         super(Recepcion, self).save(*args, **kwargs)
 
         try:
@@ -27,7 +28,7 @@ class Recepcion(models.Model):
             inventario.tot_unidades += self.unidades_in
             inventario.save()
         except ObjectDoesNotExist:
-            Inventario.objects.create(sku=self.sku_in, tot_unidades=self.unidades_in)
+            Inventario.objects.create(sku=self.sku_in, tot_unidades=self.unidades_in) # no esta sirviendo ya que si no esta en la maestra no funciona - resolver
             
 
     
@@ -41,6 +42,7 @@ class Salida(models.Model):
         return f'{self.pk} (PK) | Sku: {self.sku_out}   |   Unidades: {self.unidades_out}  |  OC: {self.orden_venta} | Pk = {self.pk}'
     
     def save(self, *args, **kwargs):
+        '''funcion para actualizar en linea las unidades segun las salidas a la base de datos de inventario por sku '''
         super(Salida, self).save(*args, **kwargs)
 
         try:
@@ -48,7 +50,7 @@ class Salida(models.Model):
             inventario.tot_unidades -= self.unidades_out
             inventario.save()
         except ObjectDoesNotExist:
-            Inventario.objects.create(sku=self.sku_out, tot_unidades=self.unidades_out)
+            Inventario.objects.create(sku=self.sku_out, tot_unidades=self.unidades_out) # no esta sirviendo ya que si no esta en la maestra no funciona - resolver
             
 
 class Inventario(models.Model):
@@ -58,9 +60,7 @@ class Inventario(models.Model):
     
     def __str__(self):
         return f'{self.pk} (PK) | Sku: {self.sku}   |   Unidades: {self.tot_unidades} | Pk = {self.pk}'
-    
-    
-    
-    # @classmethod
-    # def foo(cls):
-    #     return cls.tot_unidades + cls.unidades_in
+
+    # def verificar_salida(self, unidades):
+    #     if self.tot_unidades - unidades < 0:
+    #         raise ValueError("No puedes preparar ese pedido, ajusta las unidades")

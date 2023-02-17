@@ -12,4 +12,6 @@ urlpatterns = [
     path('recepcion/wRecepcion_full/', views.buscarRecepcion, name = 'buscarTodoRecepcion'),
     path('egreso/', views.egreso, name = 'Egreso'),
     path('egreso/wEgreso_full/', views.buscarEgreso, name = 'buscarTodoEgreso'),
+    path('stock_en_linea/', views.stock_en_linea, name='stock_en_linea'),
+    #path('actualizar_inventario/', views.actualizar_inventario, name='Actualizar'),
 ]
