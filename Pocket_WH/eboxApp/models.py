@@ -18,6 +18,13 @@ class Recepcion(models.Model):
     def __str__(self):
         return f'{self.pk} (PK) |Contenedor: {self.num_contenedor}   |   Sku: {self.sku_in}   |   Unidades: {self.unidades_in} '
 
+    # @classmethod
+    # def unidades(cls):
+    #     return cls.unidades_in
+    def entregar_unidades(self):
+        return self.unidades_in
+        
+    
 class Salida(models.Model):
     ''' Tabla de ventas cargadas en el sistema que deben descontar unidades del inventario'''
     sku_out = models.ForeignKey(Maestra, on_delete=models.CASCADE)
@@ -35,3 +42,8 @@ class Inventario(models.Model):
     def __str__(self):
         return f'{self.pk} (PK) | Sku: {self.sku}   |   Unidades: {self.tot_unidades} | Pk = {self.pk}'
     
+    
+    
+    # @classmethod
+    # def foo(cls):
+    #     return cls.tot_unidades + cls.unidades_in

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.shortcuts import render
 from django.http import HttpResponse
 from eboxApp.models import *
@@ -59,7 +59,11 @@ def recepcion(request):
             informacion = recepcion_prod.cleaned_data
             nueva_recepcion = Recepcion(num_contenedor = informacion['num_contenedor'], sku_in = informacion['sku_in'], unidades_in = informacion['unidades_in']) # son los argumentos de la clase y la guardo en el objeto     
             nueva_recepcion.save()
+            #nuevo_registro_in = Inventario(result = tot_unidades + informacion['unidades_in'], sku = informacion['sku_in'], )
+            #nuevo_registro_in.save()
             return render(request, 'eboxApp/windowsConfirm.html') # una vez que se guardo que retorne a la pagina de confrimación, y desde la confirmacion window hice un html que me retorna a inicio
+
+            
 
     else:
         recepcion_prod = RecepcionForm()
@@ -104,3 +108,6 @@ def buscarEgreso(request):
 # KARDEX 
 
 # INVENTARIO
+def sumaRecepcion(request,sku_in_id):
+    agregar = get_object_or_404(Recepcion, sku_in_id)
+    
