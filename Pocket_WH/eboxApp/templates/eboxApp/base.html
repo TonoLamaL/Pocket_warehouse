@@ -21,7 +21,10 @@
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
                 
-                <a class="navbar-brand" href="{% url 'index' %}">Inicio </a>
+                <a class="navbar-brand" href="{% url 'eboxApp:Index' %}">Inicio </a>
+                <a class="navbar-brand" href="{% url 'eboxApp:Maestra' %}">+ Productos</a>
+                <a class="navbar-brand" href="{% url 'eboxApp:Recepcion' %}">+ Recepción</a>
+                <a class="navbar-brand" href="{% url 'eboxApp:Egreso' %}">+ Egresos</a>
 
                 <a class="btn btn-primary" href="#login">Regístrate</a>
                 <a class="btn btn-primary" href="#signup">Iniciar sesión</a>
@@ -38,7 +41,7 @@
                             
                             
                             {% endblock %}
-
+        
                             <!-- Signup form-->
                             <!-- * * * * * * * * * * * * * * *-->
                             <!-- * * SB Forms Contact Form * *-->
@@ -63,8 +66,15 @@
             
 
         {% endblock %}
-
+        <!-- BLOQUE BAJO MI TEXTO EMPIEZA ACA -->
+        {% block contenido_de_inicio %}
+        
+        
+        {% endblock %}
+        <!-- BLOQUE BAJO MI TEXTO TERMINA ACA -->
         <!-- Footer-->
+        <br>
+        <br>
         <footer class="footer bg-light">
             <div class="container">
                 <div class="row">
