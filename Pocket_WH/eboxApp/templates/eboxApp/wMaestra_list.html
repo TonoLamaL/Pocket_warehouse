@@ -1,53 +1,44 @@
 {% extends "eboxApp/base.html" %}
-    {% load static %}
-    
-{% block texto_sobre_imagen %}
+{% load static %}
 
+{% block texto_sobre_imagen %}
 
 {% endblock %} 
 
 {% block contenido_que_cambia %}
 
-<div class="container" align="center">
-    <br>
-    <h1 class="mb-5">Resultado de tu busqueda >_</h1> 
+<div class="container mt-5">
+    <h1 class="text-center my-5">Resultado de tu búsqueda >_</h1> 
     {% if producto %}
-
-                    <table> 
-                        <tr>
-                            <th style="text-align: left"><h3>ID</h3></th>
-                            <th style="text-align: left"><h3>Producto</h3></th>
-                            <th style="text-align: left"><h3>Sku</h3></th>
-                            
-                        </tr>
-
-                        {% for i in producto %}
-
-                        <tr>
-                            <td style="text-align: left"><h6>{{i.pk}}</h6></td>
-                            <td style="text-align: left"><h6>{{i.nombre_producto}}</h6></td>
-                            <td style="text-align: left"><h6>{{i.numero_sku}}</h6></td>
-                        </tr>
-                        {% endfor %}
-
-                    </table>
-                    
-                <br>
-                <br>
-                <a class="btn btn-success" align = "center" href={% url 'eboxApp:Maestra' %}>Volver</a> <!-- "content-buttons" tipo de boton-->
-                
-                {% else %}
-                <p> 
-                    ____________________________________
-                    <h1>No hay datos con la nombre_producto: {{nombre_producto}} </h1>
-                    ____________________________________
-                    <br>
-                    <br>
-                    <a class="btn btn-warning" align = "center" href="{% url 'eboxApp:Maestra' %}">Volver</a> <!-- "content-buttons" tipo de boton-->
-                </p>
-
+    <div class="table-responsive">
+        <table class="table ">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Producto</th>
+                    <th>Sku</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in producto %}
+                <tr>
+                    <td>{{i.pk}}</td>
+                    <td>{{i.nombre_producto}}</td>
+                    <td>{{i.numero_sku}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-center mt-5">
+        <a class="btn btn-success mr-3" href={% url 'eboxApp:Maestra' %}>Volver</a>
+    </div>
+    {% else %}
+    <div class="text-center mt-5">
+        <h1>No hay datos con nombre_producto: {{request}} </h1>
+        <a class="btn btn-warning mt-5" href="{% url 'eboxApp:Maestra' %}">Volver</a>
+    </div>
     {% endif %} 
-
 </div>
-{% endblock %}
 
+{% endblock %}

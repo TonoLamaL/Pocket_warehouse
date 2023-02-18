@@ -3,9 +3,17 @@
     {% load static %}
 
 {% block texto_sobre_imagen %}
-    <div>
-        <h1 class="mb-5">POCKET WARE_HOUSE </h1>
-    </div>                    
+<section class="hero d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10"> <!--modificando el numero puedo arreglar el formato del texto-->
+          <h1 class="my-5" align = 'center'>POCKET WARE_HOUSE</h1>
+          <p class="my-5">La herramienta perfecta para administrar el inventario de tu negocio. Crea tu maestra de productos, registra tus ingresos y ventas, y lleva un control detallado de tu inventario. Regístrate hoy y comienza a usar Pocket Ware_House.</p>
+          <a class="btn btn-primary" href="#">Regístrate ahora</a>
+        </div>
+      </div>
+    </div>
+  </section>          
 {% endblock %}
 
 
@@ -14,7 +22,7 @@
     <!-- esto es lo que va a cambiar-->
     <br>
     <br>
-    <h1 align="center"><!--POCKET WARE_HOUSE de EBOX >_-->  </h1>
+    {% comment %} <h1 align="center"><!--POCKET WARE_HOUSE de EBOX >_-->  </h1>
     <p align = "justify"> 
         <div class="container">  
             <br>Esta herramienta esta contruida para quienes estan iniciando un negocio que necesita administración de inventario.LLevar el registro de tus compras o recepciones y tus ventas o egresos, te permitirá tener dominado tu inventario
@@ -24,7 +32,7 @@
             <br>Solo tienes que crear tu maestra de productos y estás listo. Puedes ir agregando otros a medida que vas creciendo. Registra tus recepciones y tus ventas para tener la máxima experiencia.Esperamos sea de gran ayuda. Si necesitas algo más, contactanos a EBOX Fulfillment. 
             <br>
             <br>
-        </div>
+        </div> {% endcomment %}
         <div class = "container">
             <h3 align = "center"> - Nombre | Sku | Categoria - </h3>
          </div>
@@ -41,23 +49,23 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                        <div class="features-icons-icon d-flex"><i class="bi-window m-auto text-primary"></i></div>
+                        <div class="features-icons-icon d-flex"><i class="bi-list m-auto text-primary"></i></div>
                         <h3>Crea tu maestra</h3>
-                        <p class="lead mb-0">La maestra de productos es el listado ordenado con nombre y sku de tus productos</p>
+                        <p class="lead mb-0">Crea una lista ordenada con el nombre y SKU de tus productos</p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                        <div class="features-icons-icon d-flex"><i class="bi-layers m-auto text-primary"></i></div>
-                        <h3>Carga tus ingresos</h3>
-                        <p class="lead mb-0">A través de las recepciones vas ingresando unidades de productos a tu inventarios</p>
+                        <div class="features-icons-icon d-flex"><i class="bi-upload m-auto text-primary"></i></div>
+                        <h3>Registra tus ingresos</h3>
+                        <p class="lead mb-0">Agrega unidades de productos a tu inventario a través de las recepciones</p>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="features-icons-item mx-auto mb-0 mb-lg-3">
-                        <div class="features-icons-icon d-flex"><i class="bi-terminal m-auto text-primary"></i></div>
-                        <h3>Carga las ventas</h3>
-                        <p class="lead mb-0">Podrás llevar un registro de las ordenes de ventas e irán descontando de tu inventario</p>
+                        <div class="features-icons-icon d-flex"><i class="bi-basket m-auto text-primary"></i></div>
+                        <h3>Registra tus ventas</h3>
+                        <p class="lead mb-0">Lleva un registro de las órdenes de ventas y descuenta las unidades vendidas de tu inventario</p>
                     </div>
                 </div>
             </div>
@@ -67,13 +75,13 @@
     <section class="showcase">
         <div class="container-fluid p-0">
             <div class="row g-0">
-                <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url({% static 'eboxApp/assets/img/bg-showcase-1.jpg' %})"></div>
+                <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url({% static 'eboxApp/assets/img/bg-showcase-1.png' %})"></div>
                 <div class="col-lg-6 order-lg-1 my-auto showcase-text">
                     <h2>Tu inventario en linea</h2>
                     <p class="lead mb-0">Ya no tendrás que preocuparte de tu inventario. Sabras exactamente cuantas unidades tienes por producto</p>
                 </div>
             </div>
-            <div class="row g-0">
+            {% comment %} <div class="row g-0">
                 <div class="col-lg-6 text-white showcase-img" style="background-image: url({% static 'eboxApp/assets/img/bg-showcase-2.jpg' %})"></div>
                 <div class="col-lg-6 my-auto showcase-text">
                     <h2>Registros de entradas y salidas</h2>
@@ -87,12 +95,12 @@
                     <p class="lead mb-0">Solo debes crear tu maestra y comenzar!</p>
                 </div>
             </div>
-        </div>
+        </div> {% endcomment %}
     </section>
     <!-- Testimonials-->
     <section class="testimonials text-center bg-light">
         <div class="container">
-            <h2 class="mb-5">Lo que diran las personas...</h2>
+            {% comment %} <h2 class="mb-5">Lo que diran las personas...</h2>
             <div class="row">
                 <div class="col-lg-4">
                     <div class="testimonial-item mx-auto mb-5 mb-lg-0">
@@ -115,7 +123,7 @@
                         <p class="font-weight-light mb-0">"Increible aplicación. Me encanta Pocket WareHouse!!!"</p>
                     </div>
                 </div>
-            </div>
+            </div> {% endcomment %}
         </div>
     </section>
     <!-- Call to Action-->
@@ -123,7 +131,7 @@
         <div class="container position-relative">
             <div class="row justify-content-center">
                 <div class="col-xl-6">
-                    <h2 class="mb-4">Quieres usarla. Escribenos...!</h2>
+                    <h2 class="mb-4">Estas listo para crecer a otro nivel...escribenos...!</h2>
                     <!-- Signup form-->
                     <!-- * * * * * * * * * * * * * * *-->
                     <!-- * * SB Forms Contact Form * *-->

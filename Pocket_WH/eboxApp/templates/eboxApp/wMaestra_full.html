@@ -1,55 +1,52 @@
 {% extends "eboxApp/base.html" %}
-    {% load static %}
-    
-{% block texto_sobre_imagen %}
+{% load static %}
 
+{% block texto_sobre_imagen %}
 
 {% endblock %} 
 
 {% block contenido_que_cambia %}
 
-<div class="container" align="center">
-    <br>
-    <h1 class="mb-5">Lista de tu Maestra de productos >_</h1> 
-    {% if producto %}
-
-                    <table> 
-                        <tr>
-                            <th style="text-align: left"><h3>ID</h3></th>
-                            <th style="text-align: left"><h3>Producto</h3></th>
-                            <th style="text-align: left"><h3>Sku</h3></th>
-                            <th style="text-align: left"><h3>Categoría</h3></th>
-                            
-                        </tr>
-
-                        {% for i in producto %}
-
-                        <tr>
-                            <td style="text-align: left"><h6>{{i.pk}}</h6></td>
-                            <td style="text-align: left"><h6>{{i.nombre_producto}}</h6></td>
-                            <td style="text-align: left"><h6>{{i.numero_sku}}</h6></td>
-                            <td style="text-align: left"><h6>{{i.categoria}}</h6></td>
-                        </tr>
-                        {% endfor %}
-
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <br>
+            <br>
+            <h1 class="text-center my-5">Lista de tu Maestra de productos</h1>
+            {% if producto %}
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Producto</th>
+                                <th scope="col">SKU</th>
+                                <th scope="col">Categoría</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in producto %}
+                                <tr>
+                                    <th scope="row">{{ i.pk }}</th>
+                                    <td>{{ i.nombre_producto }}</td>
+                                    <td>{{ i.numero_sku }}</td>
+                                    <td>{{ i.categoria }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
                     </table>
-                    
-                <br>
-                <br>
-                <a class="btn btn-success" align = "center" href={% url 'eboxApp:Maestra' %}>Volver</a> <!-- "content-buttons" tipo de boton-->
-                
-                {% else %}
-                <p> 
-                    ____________________________________
-                    <h1>No hay datos </h1>
-                    ____________________________________
-                    <br>
-                    <br>
-                    <a class="btn btn-warning" align = "center" href="{% url 'eboxApp:Maestra' %}">Volver</a> <!-- "content-buttons" tipo de boton-->
-                </p>
-
-    {% endif %} 
-
+                </div>
+                <div class="text-center mt-5">
+                    <a class="btn btn-success" href="{% url 'eboxApp:Maestra' %}">Volver</a>
+                </div>
+            {% else %}
+                <div class="text-center">
+                    <h1>No hay datos</h1>
+                    <a class="btn btn-warning" href="{% url 'eboxApp:Maestra' %}">Volver</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 </div>
-{% endblock %}
 
+{% endblock %}

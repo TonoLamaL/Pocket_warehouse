@@ -1,16 +1,22 @@
 {% extends "eboxApp/base.html" %}
     {% load static %}
 {% block contenido_que_cambia %}
-    <br>
-    <h2 align="center"> + RECEPCIONES </h2>
-    <br>
-    <br>
-    
-    <div class="container">
-        <h3>1.- Ingresa la mercadería que recibiste >_</h3>
-        <br>
+<div class="container mt-5">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title mb-4 text-center">+ RECEPCIONES</h2>
+        <h3 class="mb-3">1. Ingresa la mercadería que recibiste</h3>
+
         {% if recepcion_prod.errors %}
         <p style="color: red;"> Estan mal los datos, revisar</p>
+        {% endif %}
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li style="color: red;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
         {% endif %}
 
         <form method='POST'>
@@ -21,28 +27,23 @@
                 {{recepcion_prod.as_table}}
 
             </div>
-            * solo se pueden seleccionar los productos creados en la maestra
-            <br>
+            <p class="text-muted">* Solo se pueden seleccionar los productos creados en la maestra.</p>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </form>
+        </div>
+      </div>
 
-            <button type="submit" class = "btn btn-primary">Enviar</button>
 
-
-        </form>
+      <div class="card mt-4">
+        <div class="card-body">
+          <h3 class="mb-3">2. Buscar todo</h3>
+          <p style="color: gray;" >Revisa la lista de tus ingresos en recepciones.</p>
+          <form action="wRecepcion_full/" method="GET">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+          </form>
+        </div>
+      </div>
     </div>
-    <br>   
-    <br>
-    <br>   
-    <div class="container">
-        <h3>2.- Buscar todo >_</h3>
-        <br>
-        <form action="wRecepcion_full/" method "GET"> <!-- buscar es un nuevo path-->
-
-            <button type="submit" class = "btn btn-primary">Buscar</button>
-            <br>
-        </form>
-    </div>
-    <br>   
-    <br>
    
 
 {% endblock %}

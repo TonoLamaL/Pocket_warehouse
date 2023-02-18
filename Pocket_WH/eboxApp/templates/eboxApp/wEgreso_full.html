@@ -1,60 +1,49 @@
 {% extends "eboxApp/base.html" %}
-    {% load static %}
-    
-{% block texto_sobre_imagen %}
-
-
-{% endblock %} 
+{% load static %}
 
 {% block contenido_que_cambia %}
 
-<div class="container" align="center">
-    <br>
-    <h1 class="mb-5">Lista de Egreso de las ordenes de venta>_</h1> 
+<div class="container">
+    <h1 class="text-center my-5">Lista de Egreso de las órdenes de venta >_</h1>
+
     {% if salidas %}
+    <div class="table-responsive">
+        <table class="table">
+            <thead >
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Orden de venta</th>
+                    <th scope="col">ID de producto</th>
+                    <th scope="col">SKU</th>
+                    <th scope="col">Nombre del producto</th>
+                    <th scope="col">Unidades</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in salidas %}
+                <tr>
+                    <td>{{ i.pk }}</td>
+                    <td>{{ i.orden_venta }}</td>
+                    <td>{{ i.sku_out.id }}</td>
+                    <td>{{ i.sku_out.numero_sku }}</td>
+                    <td>{{ i.sku_out.nombre_producto }}</td>
+                    <td>{{ i.unidades_out }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-                    <table> 
-                        <tr>
-                            <th style="text-align: left"><h3>ID</h3></th>
-                            <th style="text-align: left"><h3>Orden de venta</h3></th>
-                            <th style="text-align: left">ID de producto</th>
-                            <th style="text-align: left">SKU</th>
-                            <th style="text-align: left">Nombre del producto</th>
-                            <th style="text-align: left"><h3>Unidades</h3></th>
-                            
-                        </tr>
+    <div class="text-center mt-5">
+        <a class="btn btn-success" href="{% url 'eboxApp:Egreso' %}">Volver</a>
+    </div>
 
-                        {% for i in salidas %}
-
-                        <tr>
-                            <td style="text-align: left"><h6>{{i.pk}}</h6></td>
-                            <td style="text-align: left"><h6>{{i.orden_venta}}</h6></td>
-                            <td style="text-align: left"><h6>{{i.sku_out.id}}</h6></td>
-                            <td style="text-align: left"><h6>{{i.sku_out.numero_sku}}</h6></td>
-                            <td style="text-align: left"><h6>{{i.sku_out.nombre_producto}}</h6></td>
-                            <td style="text-align: left"><h6>{{i.unidades_out}}</h6></td>
-
-                        </tr>
-                        {% endfor %}
-
-                    </table>
-                    
-                <br>
-                <br>
-                <a class="btn btn-success" align = "center" href={% url 'eboxApp:Egreso' %}>Volver</a> <!-- "content-buttons" tipo de boton-->
-                
-                {% else %}
-                <p> 
-                    ____________________________________
-                    <h1>No hay datos </h1>
-                    ____________________________________
-                    <br>
-                    <br>
-                    <a class="btn btn-warning" align = "center" href="{% url 'eboxApp:Egresi' %}">Volver</a> <!-- "content-buttons" tipo de boton-->
-                </p>
-
-    {% endif %} 
-
+    {% else %}
+    <div class="text-center">
+        <h1>No hay datos</h1>
+        <a class="btn btn-warning" href="{% url 'eboxApp:Egreso' %}">Volver</a>
+    </div>
+    {% endif %}
 </div>
-{% endblock %}
 
+{% endblock %}

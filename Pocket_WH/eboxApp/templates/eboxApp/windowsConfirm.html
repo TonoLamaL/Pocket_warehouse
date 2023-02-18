@@ -1,13 +1,18 @@
 {% extends "eboxApp/base.html" %}
-    {% load static %}
+{% load static %}
+
 {% block texto_sobre_imagen %}
-
-
-            <h1 class="mb-5">Formulario creado exitosamente!</h1> 
-            <a class="btn btn-success" href="">Aceptar</a> <!-- "content-buttons" tipo de boton, ademas sejar vacio el href me lleva a la pagina donde estaba?-->
-
-                            
 {% endblock %} 
+
+{% block contenido_que_cambia %}
+
+<div class="container text-center py-5">
+  <h1 class="mb-5">Formulario creado exitosamente!</h1>
+  <a class="btn btn-success" href="{% url 'eboxApp:Maestra' %}">Aceptar</a>
+</div>
+
+{% endblock %}
+
 
 <!--
     <button type="button" class="btn btn-primary">Primary</button>
