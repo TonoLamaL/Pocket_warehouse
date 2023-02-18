@@ -9,19 +9,29 @@
     <div class="container">
         <h3>1.- Ingresa la mercadería que vendiste >_</h3>
         <br>
-        {% if egreso_prod.errors %}
-        <p style="color: red;"> Estan mal los datos, revisar</p>
+        {% if form.errors %}
+        <li><p style="color: red;"> Estan mal los datos, revisar</p></li>
         {% endif %}
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li style="color: red;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        
 
         <form method='POST'>
             {% csrf_token %}
             <!-- Aca esta la magia de Django -->
             <div class="form-group">
 
-                {{egreso_prod.as_table}}
+                {{form.as_table}}
 
             </div>
-            * solo se pueden seleccionar los productos creados en la maestra
+            <p style="color: blue;" >* solo se pueden seleccionar los productos creados en la maestra</p>
             <br>
 
             <button type="submit" class = "btn btn-primary">Enviar</button>
@@ -44,3 +54,4 @@
    
 
 {% endblock %}
+

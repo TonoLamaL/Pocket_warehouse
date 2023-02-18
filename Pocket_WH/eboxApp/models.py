@@ -43,15 +43,16 @@ class Salida(models.Model):
     
     def save(self, *args, **kwargs):
         '''funcion para actualizar en linea las unidades segun las salidas a la base de datos de inventario por sku '''
-        super(Salida, self).save(*args, **kwargs)
-
         try:
             inventario = Inventario.objects.get(sku=self.sku_out)
+            if inventario.tot_unidades - self.unidades_out < 0:
+                raise ValueError("No puedes preparar ese pedido, no te alcanzan las unidades, ajusta las unidades del pedido")
             inventario.tot_unidades -= self.unidades_out
             inventario.save()
+            super(Salida, self).save(*args, **kwargs)
         except ObjectDoesNotExist:
-            Inventario.objects.create(sku=self.sku_out, tot_unidades=self.unidades_out) # no esta sirviendo ya que si no esta en la maestra no funciona - resolver
-            
+            Inventario.objects.create(sku=self.sku_out, tot_unidades=self.unidades_out)
+            super(Salida, self).save(*args, **kwargs)
 
 class Inventario(models.Model):
     ''' Tabla de inventario disponible en el sistema'''

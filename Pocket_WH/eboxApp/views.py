@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from eboxApp.models import *
 from eboxApp.forms import *
+from django.contrib import messages
 
 def index(request):
     ''' Página de inicio '''
@@ -80,21 +81,49 @@ def buscarRecepcion(request):
 # CREACIÓN DE ORDENES
 def egreso(request):
     " Formulario para crear un egreso que tiene que salir productos al inventario"
-    if request.method == 'POST': # si existe un post
-        egreso_prod = EgresoForm(data=request.POST)
-        print (egreso_prod)
+    # if request.method == 'POST': # si existe un post
+    #     form = EgresoForm(data=request.POST)
+    #     print (form)
         
-        # una validacion que pide django ({% csrf_token %})
-        if egreso_prod.is_valid():
-            informacion = egreso_prod.cleaned_data
-            nueva_salida = Salida(orden_venta = informacion['orden_venta'], sku_out = informacion['sku_out'], unidades_out = informacion['unidades_out']) # son los argumentos de la clase y la guardo en el objeto     
-            nueva_salida.save()
-            return render(request, 'eboxApp/windowsConfirm.html') # una vez que se guardo que retorne a la pagina de confrimación, y desde la confirmacion window hice un html que me retorna a inicio
+    #     # una validacion que pide django ({% csrf_token %})
+    #     if form.is_valid():
+    #         informacion = form.cleaned_data
+    #         nueva_salida = Salida(orden_venta = informacion['orden_venta'], sku_out = informacion['sku_out'], unidades_out = informacion['unidades_out']) # son los argumentos de la clase y la guardo en el objeto     
+    #         nueva_salida.save()
+    #         return render(request, 'eboxApp/windowsConfirm.html') # una vez que se guardo que retorne a la pagina de confrimación, y desde la confirmacion window hice un html que me retorna a inicio
 
-    else:
-        egreso_prod = EgresoForm()
+    # else:
+    #     form = EgresoForm()
     
-    return render(request, 'eboxApp/egreso.html', {'egreso_prod':egreso_prod})
+    # return render(request, 'eboxApp/egreso.html', {'form':form})
+    #def procesar_salida(request):
+    if request.method == "POST":
+        form = EgresoForm(data=request.POST)
+        print (form)
+    
+        if form.is_valid():
+            sku_out = form.cleaned_data["sku_out"]
+            unidades_out = form.cleaned_data["unidades_out"]
+            orden_venta = form.cleaned_data["orden_venta"]
+
+            try:
+                inventario = Inventario.objects.get(sku=sku_out)
+                if inventario.tot_unidades - unidades_out < 0:
+                    messages.error(request, "No puedes preparar ese pedido. Las unidades que pides no alcanzan, ajusta las unidades.")
+                    return render(request, "eboxApp/egreso.html", {"form": form})
+                else:
+                    Salida.objects.create(sku_out=sku_out, unidades_out=unidades_out, orden_venta=orden_venta)
+                    inventario.tot_unidades -= unidades_out
+                    inventario.save()
+                    return render(request, 'eboxApp/windowsConfirm.html') # una vez que se guardo que retorne a la pagina de confrimación, y desde la confirmacion window hice un html que me retorna a inicio
+            except ObjectDoesNotExist:
+                Inventario.objects.create(sku=sku_out, tot_unidades=unidades_out)
+                Salida.objects.create(sku_out=sku_out, unidades_out=unidades_out, orden_venta=orden_venta)
+                return render(request, 'eboxApp/windowsConfirm.html') # creo que esto no aplica porque no puedo crear egresos de prooductos que no existen en la maestra, y me estan quedando ahi cuando estan en cero. Si los elimino cuando llegan a 0 podría ser util
+    else:
+        form = EgresoForm()
+
+    return render(request, "eboxApp/egreso.html", {"form": form})
 
 def buscarEgreso(request):
     ''' Boton de busqueda completa de las ordenes de compra con respuesta en una lista - te llevo a una ventana distinta con boton volver'''
