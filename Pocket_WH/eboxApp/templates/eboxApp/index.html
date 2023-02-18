@@ -131,7 +131,8 @@
         <div class="container position-relative">
             <div class="row justify-content-center">
                 <div class="col-xl-6">
-                    <h2 class="mb-4">Estas listo para crecer a otro nivel...escribenos...!</h2>
+                    <h2 class="mb-4">¡Estás listo para llevar tu negocio al siguiente nivel!</h2>
+                    <p>Completa el siguiente formulario y nos pondremos en contacto contigo lo antes posible:</p>
                     <!-- Signup form-->
                     <!-- * * * * * * * * * * * * * * *-->
                     <!-- * * SB Forms Contact Form * *-->
@@ -141,34 +142,32 @@
                     <!-- https://startbootstrap.com/solution/contact-forms-->
                     <!-- to get an API token!-->
                     <form class="form-subscribe" id="contactFormFooter" data-sb-form-api-token="API_TOKEN">
-                        <!-- Email address input-->
-                        <div class="row">
-                            <div class="col">
-                                <input class="form-control form-control-lg" id="emailAddressBelow" type="email" placeholder="Email Address" data-sb-validations="required,email" />
-                                <div class="invalid-feedback text-white" data-sb-feedback="emailAddressBelow:required">Email Address es requerido.</div>
-                                <div class="invalid-feedback text-white" data-sb-feedback="emailAddressBelow:email">Email Address Email no es valida.</div>
-                            </div>
-                            <div class="col-auto"><button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Enviar</button></div>
+                        <div class="form mb-3">
+                            <input class="form-control" id="name" name="name" type="text" placeholder="Nombre completo" required>
+
+                            <div class="invalid-feedback" data-sb-feedback="name:required">Este campo es requerido.</div>
                         </div>
-                        <!-- Submit success message-->
-                        <!---->
-                        <!-- This is what your users will see when the form-->
-                        <!-- has successfully submitted-->
-                        <div class="d-none" id="submitSuccessMessage">
-                            <div class="text-center mb-3">
-                                <div class="fw-bolder">Formulario no terminado!</div>
-                                <p>Todavia no esta operativo</p>
-                                <a class="text-white" href="#direccion">Aun no activado!</a>
-                            </div>
+                        <div class="form  mb-3">
+                            <input class="form-control" id="email" name = "email" type="email" placeholder="Correo electrónico" required />
+
+                            <div class="invalid-feedback" data-sb-feedback="email:required">Este campo es requerido.</div>
+                            <div class="invalid-feedback" data-sb-feedback="email:email">Ingresa un correo electrónico válido.</div>
                         </div>
-                        <!-- Submit error message-->
-                        <!---->
-                        <!-- This is what your users will see when there is-->
-                        <!-- an error submitting the form-->
-                        <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                        <div class="form mb-3">
+                            <input class="form-control" id="phone" name = "phone" type="tel" placeholder="Teléfono" required />
+
+                            <div class="invalid-feedback" data-sb-feedback="phone:required">Este campo es requerido.</div>
+                        </div>
+                        <div class="form mb-3">
+                            <textarea class="form-control" id="message" name = "message" placeholder="Mensaje" style="height: 10rem" required></textarea>
+
+                            <div class="invalid-feedback" data-sb-feedback="message:required">Este campo es requerido.</div>
+                        </div>
+                        <button class="btn btn-primary btn-lg" id="submitButton" type="submit">Enviar</button>
                     </form>
                 </div>
             </div>
         </div>
     </section>
+                        
     {% endblock %}

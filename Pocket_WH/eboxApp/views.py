@@ -17,7 +17,7 @@ def maestra(request):
         maestra_prod = MaestraForm(data=request.POST)
         print (maestra_prod)
         
-        # una validacion que pide django ({% csrf_token %})
+        # una validacion que pide django ({% csrf_token %}) en el html
         if maestra_prod.is_valid():
             informacion = maestra_prod.cleaned_data
             nuevo_producto = Maestra(nombre_producto = informacion['nombre_producto'], numero_sku = informacion['numero_sku'], categoria = informacion['categoria']) # son los argumentos de la clase y la guardo en el objeto     
@@ -81,22 +81,6 @@ def buscarRecepcion(request):
 # CREACIÓN DE ORDENES
 def egreso(request):
     " Formulario para crear un egreso que tiene que salir productos al inventario"
-    # if request.method == 'POST': # si existe un post
-    #     form = EgresoForm(data=request.POST)
-    #     print (form)
-        
-    #     # una validacion que pide django ({% csrf_token %})
-    #     if form.is_valid():
-    #         informacion = form.cleaned_data
-    #         nueva_salida = Salida(orden_venta = informacion['orden_venta'], sku_out = informacion['sku_out'], unidades_out = informacion['unidades_out']) # son los argumentos de la clase y la guardo en el objeto     
-    #         nueva_salida.save()
-    #         return render(request, 'eboxApp/windowsConfirm.html') # una vez que se guardo que retorne a la pagina de confrimación, y desde la confirmacion window hice un html que me retorna a inicio
-
-    # else:
-    #     form = EgresoForm()
-    
-    # return render(request, 'eboxApp/egreso.html', {'form':form})
-    #def procesar_salida(request):
     if request.method == "POST":
         form = EgresoForm(data=request.POST)
         print (form)
@@ -192,7 +176,16 @@ def migrar_inventario():
 
 '''
 recepcion_set es una referencia a la relación inversa de la clase Maestra con la clase Recepcion. En Django, cuando se define una clave foránea en una clase, se crea automáticamente una relación inversa en la clase relacionada.
-
 En este caso, como la clase Recepcion tiene una clave foránea a Maestra, se creó automáticamente un atributo en Maestra llamado recepcion_set que puede ser utilizado para acceder a todas las instancias de Recepcion que tienen una clave foránea a esa instancia de Maestra.
+Por ejemplo, si tienes una instancia maestra de Maestra, puedes acceder a todas las instancias de Recepcion que tienen una clave foránea a esa instancia utilizando el atributo maestra.recepcion_set.all().
 
-Por ejemplo, si tienes una instancia maestra de Maestra, puedes acceder a todas las instancias de Recepcion que tienen una clave foránea a esa instancia utilizando el atributo maestra.recepcion_set.all().'''
+NECESITO:
+- agregar fechas -datafield
+- verificador de orden repetida
+- gráficos de analisis de datos
+- filtro en tablas - agregar un buscador de ordenes 
+- agregar en models Class Categoria: para la construccion de las categorias
+- como hacer para que los datos se guarden en un formato lower o upper y que los muestre tipo tittle...la busqueda debe transformar en el formato en que esta guardando el dato!
+- 
+
+'''
