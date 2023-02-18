@@ -15,6 +15,7 @@ class Recepcion(models.Model):
     num_contenedor = models.CharField(max_length=100)
     sku_in = models.ForeignKey(Maestra, on_delete=models.CASCADE)
     unidades_in = models.IntegerField()
+    fecha_recepcion = models.DateField(null=True)
     
     def __str__(self):
         return f'{self.pk} (PK) |Contenedor: {self.num_contenedor}   |   Sku: {self.sku_in}   |   Unidades: {self.unidades_in} '
@@ -37,6 +38,7 @@ class Salida(models.Model):
     sku_out = models.ForeignKey(Maestra, on_delete=models.CASCADE)
     unidades_out = models.IntegerField()
     orden_venta = models.CharField(max_length=100)
+    fecha_despacho = models.DateField(null=True)
     
     def __str__(self):
         return f'{self.pk} (PK) | Sku: {self.sku_out}   |   Unidades: {self.unidades_out}  |  OC: {self.orden_venta} | Pk = {self.pk}'

@@ -15,8 +15,9 @@
             <table class="table table-hover">
                 <thead>
                     <tr class = "table-dark">
-                        <th>ID</th>
+                        <th>ID Recepcion</th>
                         <th>Contenedor</th>
+                        <th>Fecha de ingreso</th>
                         <th>ID de producto</th>
                         <th>SKU</th>
                         <th>Nombre del producto</th>
@@ -28,6 +29,7 @@
                         <tr>
                             <td>{{recepcion.pk}}</td>
                             <td>{{recepcion.num_contenedor}}</td>
+                            <td>{{recepcion.fecha_recepcion}}</td>
                             <td>{{recepcion.sku_in.id}}</td>
                             <td>{{recepcion.sku_in.numero_sku}}</td>
                             <td>{{recepcion.sku_in.nombre_producto}}</td>

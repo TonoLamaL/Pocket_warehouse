@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from eboxApp.models import *
 from eboxApp.forms import *
 from django.contrib import messages
+from datetime import date, datetime
 
 def index(request):
     ''' Página de inicio '''
@@ -58,8 +59,9 @@ def recepcion(request):
         # una validacion que pide django ({% csrf_token %})
         if recepcion_prod.is_valid():
             informacion = recepcion_prod.cleaned_data
-            nueva_recepcion = Recepcion(num_contenedor = informacion['num_contenedor'], sku_in = informacion['sku_in'], unidades_in = informacion['unidades_in']) # son los argumentos de la clase y la guardo en el objeto     
+            nueva_recepcion = Recepcion(num_contenedor = informacion['num_contenedor'], sku_in = informacion['sku_in'], unidades_in = informacion['unidades_in'],fecha_recepcion=date.today()) # asignar la fecha actual) # son los argumentos de la clase y la guardo en el objeto     
             nueva_recepcion.save()
+            
             #nuevo_registro_in = Inventario(result = tot_unidades + informacion['unidades_in'], sku = informacion['sku_in'], )
             #nuevo_registro_in.save()
             return render(request, 'eboxApp/windowsConfirm.html') # una vez que se guardo que retorne a la pagina de confrimación, y desde la confirmacion window hice un html que me retorna a inicio
@@ -89,20 +91,25 @@ def egreso(request):
             sku_out = form.cleaned_data["sku_out"]
             unidades_out = form.cleaned_data["unidades_out"]
             orden_venta = form.cleaned_data["orden_venta"]
-
+            fecha_despacho = form.cleaned_data["fecha_despacho"]
+            
+            fecha_str = fecha_despacho.strftime('%d-%m-%Y')
+            fecha_despacho = datetime.strptime(fecha_str, '%d-%m-%Y').date()
+            
             try:
                 inventario = Inventario.objects.get(sku=sku_out)
+                
                 if inventario.tot_unidades - unidades_out < 0:
                     messages.error(request, "No puedes preparar ese pedido. Las unidades que pides no alcanzan, ajusta las unidades.")
                     return render(request, "eboxApp/egreso.html", {"form": form})
                 else:
-                    Salida.objects.create(sku_out=sku_out, unidades_out=unidades_out, orden_venta=orden_venta)
+                    Salida.objects.create(sku_out=sku_out, unidades_out=unidades_out, orden_venta=orden_venta, fecha_despacho=fecha_despacho)
                     inventario.tot_unidades -= unidades_out
                     inventario.save()
                     return render(request, 'eboxApp/windowsConfirm.html') # una vez que se guardo que retorne a la pagina de confrimación, y desde la confirmacion window hice un html que me retorna a inicio
             except ObjectDoesNotExist:
                 Inventario.objects.create(sku=sku_out, tot_unidades=unidades_out)
-                Salida.objects.create(sku_out=sku_out, unidades_out=unidades_out, orden_venta=orden_venta)
+                Salida.objects.create(sku_out=sku_out, unidades_out=unidades_out, orden_venta=orden_venta,fecha_despacho=fecha_despacho)
                 return render(request, 'eboxApp/windowsConfirm.html') # creo que esto no aplica porque no puedo crear egresos de prooductos que no existen en la maestra, y me estan quedando ahi cuando estan en cero. Si los elimino cuando llegan a 0 podría ser util
     else:
         form = EgresoForm()
@@ -180,7 +187,7 @@ En este caso, como la clase Recepcion tiene una clave foránea a Maestra, se cre
 Por ejemplo, si tienes una instancia maestra de Maestra, puedes acceder a todas las instancias de Recepcion que tienen una clave foránea a esa instancia utilizando el atributo maestra.recepcion_set.all().
 
 NECESITO:
-- agregar fechas -datafield
+- agregar fechas -datafield -> OK (costo mas que la mierda)
 - verificador de orden repetida
 - gráficos de analisis de datos
 - filtro en tablas - agregar un buscador de ordenes 

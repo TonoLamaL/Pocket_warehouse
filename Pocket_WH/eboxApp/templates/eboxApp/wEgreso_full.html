@@ -11,8 +11,9 @@
         <table class="table">
             <thead >
                 <tr class = "table-dark">
-                    <th scope="col">ID</th>
+                    <th scope="col">ID Orden</th>
                     <th scope="col">Orden de venta</th>
+                    <th scope="col">Fecha de despacho</th>
                     <th scope="col">ID de producto</th>
                     <th scope="col">SKU</th>
                     <th scope="col">Nombre del producto</th>
@@ -24,6 +25,7 @@
                 <tr>
                     <td>{{ i.pk }}</td>
                     <td>{{ i.orden_venta }}</td>
+                    <td>{{ i.fecha_despacho }}</td>
                     <td>{{ i.sku_out.id }}</td>
                     <td>{{ i.sku_out.numero_sku }}</td>
                     <td>{{ i.sku_out.nombre_producto }}</td>
