@@ -24,7 +24,16 @@ obtener reportes, etc.
     c.- categoria 
 
 2.- registra las compras a nivel de unidades para ir sumando a tu inventario
-3.- regiatra tu ventas a nivel de unidades para ir reatando a tu inventario 
+    a.- anota el contenedor que trae la mercaderia o el nombre sel proveedor
+    b.- busca el sku que recibiste (previamente debe eatar creado en tu maeatra)
+    c.- anota cuantas unidades son
+
+3.- registra tu ventas a nivel de unidades para ir reatando a tu inventario 
+    a.- anota el número con el que se identifica la compra (orden de compra)
+    b.- busca el sku vendido
+    c.- anota la cantidad de unidades vendidas en esa orden
+
 4.- revisa tu stock(inventario) para tener claridad de lo que te queda por vender, que debes comprar y muchas cosas mas.
+    a.- analiza el stock que te queda disponible. saca tus conclusiones. esto mantendra tu inventario cuadrado.
 
  
