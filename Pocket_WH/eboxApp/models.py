@@ -4,7 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 class Maestra(models.Model):
     ''' Tabla de creación de maestra de productos del inventario para el sistema'''
     nombre_producto = models.CharField(max_length=300)
-    numero_sku = models.IntegerField()
+    numero_sku = models.CharField(max_length=300)
     categoria = models.CharField(max_length=300)
 
     def __str__(self):

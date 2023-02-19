@@ -35,7 +35,7 @@
     </div>
     {% else %}
     <div class="text-center mt-5">
-        <h1>No hay datos con el nombre de producto: {{request.GET.nombre_producto}} </h1> <!--asi devuelvo la palabra ingresada : request.GET.nombre_producto -->
+        <h1>No hay datos con el nombre de producto: {{request.GET.nombre_producto}} </h1> <!--asi devuelvo la palabra ingresada : request.GET.nombre_producto git-->
         <a class="btn btn-warning mt-5" href="{% url 'eboxApp:Maestra' %}">Volver</a>
     </div>
     {% endif %} 

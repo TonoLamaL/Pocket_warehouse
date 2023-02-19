@@ -6,21 +6,30 @@
       <div class="card-body">
         <h2 class="card-title mb-4 text-center">+ EGRESOS</h2>
         <h3 class="mb-3">1. Ingresa la mercadería que vendiste.</h3>
-        {% if form.errors %}
-        <li><p style="color: red;"> Revisa los datos ingresados.</p></li>
-        {% endif %}
 
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li style="color: red;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+            {% if success %} <!--aqui llamo a la variable exitoso de view , que tiene un valor True y asi envio el mensaje -->
+            <div class="alert alert-success" role="alert">
+                Formulario creado con éxito.
+            </div>
+            {% endif %}
+            
+            {% if form.errors %}
+            <li><p style="color: red;"> Revisa los datos ingresados.</p></li>
+            {% endif %}
+
+
+
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li style="color: red;" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
 
         
 
-            <form method='POST'>
+          <form method='POST'>
             {% csrf_token %}
             <!-- Aca esta la magia de Django -->
             <div class="form-group">

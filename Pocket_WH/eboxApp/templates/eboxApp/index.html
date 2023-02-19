@@ -9,7 +9,7 @@
         <div class="col-lg-10"> <!--modificando el numero puedo arreglar el formato del texto-->
           <h1 class="my-5" align = 'center'>POCKET WARE_HOUSE</h1>
           <p class="my-5">La herramienta perfecta para administrar el inventario de tu negocio. Crea tu maestra de productos, registra tus ingresos y ventas, y lleva un control detallado de tu inventario. Regístrate hoy y comienza a usar Pocket Ware_House.</p>
-          <a class="btn btn-primary" href="#">Regístrate ahora</a>
+          <a class="btn btn-primary" href="#signup">Regístrate ahora</a>
         </div>
       </div>
     </div>
@@ -46,29 +46,29 @@
     <br>
     <section class="features-icons bg-light text-center">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
+            <div class="row d-flex">
+                <div class="col-lg-4 flex-fill">
                     <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
                         <div class="features-icons-icon d-flex"><i class="bi-list m-auto text-primary"></i></div>
                         <h3>1.- Crea tu maestra</h3>
                         <p class="lead mb-0">Crea una lista ordenada con el nombre y SKU de tus productos.</p>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4" "col-lg-4 flex-fill">
                     <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
                         <div class="features-icons-icon d-flex"><i class="bi-upload m-auto text-primary"></i></div>
                         <h3>2.- Registra tus ingresos</h3>
                         <p class="lead mb-0">Agrega unidades de productos a tu inventario a través de las recepciones.</p>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 flex-fill">
                     <div class="features-icons-item mx-auto mb-0 mb-lg-3">
                         <div class="features-icons-icon d-flex"><i class="bi-basket m-auto text-primary"></i></div>
                         <h3>3.- Registra tus ventas</h3>
                         <p class="lead mb-0">Lleva un registro de las órdenes de ventas y descuenta las unidades vendidas de tu inventario.</p>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 flex-fill">
                     <div class="features-icons-item mx-auto mb-0 mb-lg-3">
                         <div class="features-icons-icon d-flex"><i class="bi-archive m-auto text-primary"></i></div>
                         <h3>4.- Analiza tu stock en linea</h3>
@@ -82,7 +82,7 @@
     <section class="showcase">
         <div class="container-fluid p-0">
             <div class="row g-0">
-                <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url({% static 'eboxApp/assets/img/bg-showcase-1.png' %})"></div>
+                <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url({% static 'eboxApp/assets/img/bg-showcase-1.jpeg' %})"></div>
                 <div class="col-lg-6 order-lg-1 my-auto showcase-text">
                     <h2>Tu inventario en linea</h2>
                     <p class="lead mb-0">Ya no tendrás que preocuparte de tu inventario. Sabras exactamente cuantas unidades tienes por producto</p>
@@ -134,7 +134,7 @@
         </div>
     </section>
     <!-- Call to Action-->
-    <section class="call-to-action text-white text-center" id="signup">
+    <section class="call-to-action text-white text-center" id="signup"> <!--este id me esta relacionando con el  boton de registarte de index.htlm aqui mismo mas arriba-->
         <div class="container position-relative">
             <div class="row justify-content-center">
                 <div class="col-xl-6">
@@ -148,7 +148,7 @@
                     <!-- To make this form functional, sign up at-->
                     <!-- https://startbootstrap.com/solution/contact-forms-->
                     <!-- to get an API token!-->
-                    <form class="form-subscribe" id="contactFormFooter" data-sb-form-api-token="API_TOKEN">
+                    <form class="form-subscribe" id="contactFormFooter" > <!--data-sb-form-api-token="API_TOKEN"-->
                         <div class="form mb-3">
                             <input class="form-control" id="name" name="name" type="text" placeholder="Nombre completo" required>
 

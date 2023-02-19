@@ -14,6 +14,7 @@ def index(request):
 
 def maestra(request):
     ''' Formulario para crear nuevos productos en la maestra de productos - te llevo a una ventana distinta con boton volver'''
+    success = True
     if request.method == 'POST': # si existe un post
         maestra_prod = MaestraForm(data=request.POST)
         print (maestra_prod)
@@ -23,17 +24,20 @@ def maestra(request):
             informacion = maestra_prod.cleaned_data
             nuevo_producto = Maestra(nombre_producto = informacion['nombre_producto'], numero_sku = informacion['numero_sku'], categoria = informacion['categoria']) # son los argumentos de la clase y la guardo en el objeto     
             nuevo_producto.save()
-            return render(request, 'eboxApp/windowsConfirm.html') # una vez que se guardo que retorne a la pagina de confrimación, y desde la confirmacion window hice un html que me retorna a inicio
-    
+            success = True
+            maestra_prod = MaestraForm()
+            return render(request, 'eboxApp/maestra.html', {'maestra_prod':maestra_prod, 'success': success}) # le entrego el conexto de success para me muestre el mensaje que le digo en el html
+            #return render(request, 'eboxApp/windowsConfirm.html') # una vez que se guardo que retorne a la pagina de confrimación, y desde la confirmacion window hice un html que me retorna a inicio
     else:
         maestra_prod = MaestraForm()
+        success = False
     
-    return render(request, 'eboxApp/maestra.html', {'maestra_prod':maestra_prod}) # si hay campos vacios estamos en esta html -> este link dice quien toma la funcion de form 
+    return render(request, 'eboxApp/maestra.html', {'maestra_prod':maestra_prod, 'success': success})
 
 
 def buscarProducto(request):
     ''' Formulario para buscar un producto en especifico por su nombre - te llevo a una ventana distinta con boton volver'''
-    if request.method == 'GET': # si existe un post
+    if request.method == 'GET': # si existe un get
         busqueda = request.GET['nombre_producto']
         #busqueda = busqueda.lower()
         producto = Maestra.objects.filter(nombre_producto = busqueda)
@@ -41,17 +45,19 @@ def buscarProducto(request):
         return render(request, 'eboxApp/wMaestra_list.html', {'producto':producto , 'busqueda':busqueda })
     
 def buscarMaestra(request):
+    '''funcion para traer todos los elementos creados en el formulario de maestra'''
     ''' Boton de busqueda completa de la maestra con respuesta en una lista - te llevo a una ventana distinta con boton volver'''
-    if request.method == 'GET': # si existe un post
-        producto = Maestra.objects.all()
+    if request.method == 'GET': # si existe un get
+        producto = Maestra.objects.all() # busco todo lo que hay en la maestra
         
-        return render(request, 'eboxApp/wMaestra_full.html', {'producto':producto })
+        return render(request, 'eboxApp/wMaestra_full.html', {'producto':producto }) # aqui le digo donde quiero mostrar "producto"
 
 
 # RECEPCIÓN
 
 def recepcion(request):
     " Formulario para crear una recepción que tiene que ingresar productos al inventario"
+    success = False
     if request.method == 'POST': # si existe un post
         recepcion_prod = RecepcionForm(data=request.POST)
         print (recepcion_prod)
@@ -61,21 +67,22 @@ def recepcion(request):
             informacion = recepcion_prod.cleaned_data
             nueva_recepcion = Recepcion(num_contenedor = informacion['num_contenedor'], sku_in = informacion['sku_in'], unidades_in = informacion['unidades_in'],fecha_recepcion=date.today()) # asignar la fecha actual) # son los argumentos de la clase y la guardo en el objeto     
             nueva_recepcion.save()
-            
-            #nuevo_registro_in = Inventario(result = tot_unidades + informacion['unidades_in'], sku = informacion['sku_in'], )
-            #nuevo_registro_in.save()
-            return render(request, 'eboxApp/windowsConfirm.html') # una vez que se guardo que retorne a la pagina de confrimación, y desde la confirmacion window hice un html que me retorna a inicio
+            success = True
+            recepcion_prod = RecepcionForm()
+            return render(request, 'eboxApp/recepcion.html', {'recepcion_prod':recepcion_prod, 'success': success}) # le entrego el conexto de success para me muestre el mensaje que le digo en el html
+            #return render(request, 'eboxApp/windowsConfirm.html') # una vez que se guardo que retorne a la pagina de confrimación, y desde la confirmacion window hice un html que me retorna a inicio
 
             
 
     else:
         recepcion_prod = RecepcionForm()
+        success = False
     
     return render(request, 'eboxApp/recepcion.html', {'recepcion_prod':recepcion_prod})
 
 def buscarRecepcion(request):
     ''' Boton de busqueda completa de las recepciones con respuesta en una lista - te llevo a una ventana distinta con boton volver'''
-    if request.method == 'GET': # si existe un post
+    if request.method == 'GET': # si existe una solicitud, get 
         recepciones = Recepcion.objects.all()
         
         return render(request, 'eboxApp/wRecepcion_full.html', {'recepciones':recepciones })
@@ -83,6 +90,7 @@ def buscarRecepcion(request):
 # CREACIÓN DE ORDENES
 def egreso(request):
     " Formulario para crear un egreso que tiene que salir productos al inventario"
+    success = False
     if request.method == "POST":
         form = EgresoForm(data=request.POST)
         print (form)
@@ -93,28 +101,44 @@ def egreso(request):
             orden_venta = form.cleaned_data["orden_venta"]
             fecha_despacho = form.cleaned_data["fecha_despacho"]
             
-            fecha_str = fecha_despacho.strftime('%d-%m-%Y')
-            fecha_despacho = datetime.strptime(fecha_str, '%d-%m-%Y').date()
+            fecha_str = fecha_despacho.strftime('%d-%m-%Y') # tranformo la fecha en el formato string 
+            fecha_despacho = datetime.strptime(fecha_str, '%d-%m-%Y').date() # uso la fecha de despacho con formato fecha 
+
             
             try:
-                inventario = Inventario.objects.get(sku=sku_out)
+                inventario = Inventario.objects.get(sku=sku_out) # intenta buscar el sku de inventario = sku_out de egreso puesto en el formulario.
                 
-                if inventario.tot_unidades - unidades_out < 0:
+                if inventario.tot_unidades - unidades_out < 0: # accedo a la variable inventario
                     messages.error(request, "No puedes preparar ese pedido. Las unidades que pides no alcanzan, ajusta las unidades.")
+                    print(messages)
                     return render(request, "eboxApp/egreso.html", {"form": form})
                 else:
                     Salida.objects.create(sku_out=sku_out, unidades_out=unidades_out, orden_venta=orden_venta, fecha_despacho=fecha_despacho)
                     inventario.tot_unidades -= unidades_out
                     inventario.save()
-                    return render(request, 'eboxApp/windowsConfirm.html') # una vez que se guardo que retorne a la pagina de confrimación, y desde la confirmacion window hice un html que me retorna a inicio
+                    success = True
+                    form = EgresoForm()
+                    return render(request, 'eboxApp/egreso.html', {'form':form, 'success': success}) # le entrego el conexto de success para me muestre el mensaje que le digo en el html
+                    
+                    #return render(request, 'eboxApp/windowsConfirm.html') # una vez que se guardo que retorne a la pagina de confrimación, y desde la confirmacion window hice un html que me retorna a inicio
             except ObjectDoesNotExist:
                 Inventario.objects.create(sku=sku_out, tot_unidades=unidades_out)
                 Salida.objects.create(sku_out=sku_out, unidades_out=unidades_out, orden_venta=orden_venta,fecha_despacho=fecha_despacho)
                 return render(request, 'eboxApp/windowsConfirm.html') # creo que esto no aplica porque no puedo crear egresos de prooductos que no existen en la maestra, y me estan quedando ahi cuando estan en cero. Si los elimino cuando llegan a 0 podría ser util
     else:
         form = EgresoForm()
+        success = False
 
     return render(request, "eboxApp/egreso.html", {"form": form})
+'''
+PARA QUE ES EL CONTEXTO EN UN RENDER:
+
+El contexto es un diccionario de Python que se utiliza para pasar datos a una plantilla HTML en Django. 
+Básicamente, permite que la vista de Django envíe información a la plantilla HTML para que esta última pueda mostrar la información de manera dinámica.
+El diccionario de contexto se pasa como argumento a la función render(), que se utiliza para generar una respuesta HTTP que contiene la plantilla HTML.
+Los elementos del diccionario se pueden acceder en la plantilla HTML utilizando el sistema de plantillas de Django, que utiliza etiquetas como {{}} o {% %}.
+
+'''
 
 def buscarEgreso(request):
     ''' Boton de busqueda completa de las ordenes de compra con respuesta en una lista - te llevo a una ventana distinta con boton volver'''

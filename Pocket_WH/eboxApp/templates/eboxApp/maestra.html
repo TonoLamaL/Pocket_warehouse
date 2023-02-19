@@ -1,50 +1,59 @@
 {% extends "eboxApp/base.html" %}
     {% load static %}
 {% block contenido_que_cambia %}
-<div class="container mt-5">
-    <div class="card">
-      <div class="card-body">
-        <h2 class="card-title mb-4 text-center">+ MAESTRA</h2>
-        <h3 class="mb-3">1. Crea o agrega los productos a tu maestra.</h3>
-
-        {% if maestra_prod.errors %}
-        <p style="color: red;"> Revisa los datos ingresados.</p>
-        {% endif %}
-
-            <form method='POST'>
-            {% csrf_token %}
-            <!-- Aca esta la magia de Django -->
-            <div class="form-group">
-
-                {{maestra_prod.as_table}}
-            </div>
-            <br>
-            <button type="submit" class="btn btn-primary">Enviar</button>
-          </form>
-        </div>
-      </div>
-      <div class="card mt-4">
-        <div class="card-body">
-        <h3 class="mb-3">2. Busca un producto por su nombre.</h3>
-        <p style="color: gray;" >Revisa el detalle del producto registrado que estas buscando.</p>
-        <label for="disabledTextInput">Nombre:</label>
-            <form action="wMaestra_list/" method="GET">
-            <input class = "form-control" type="text" name="nombre_producto" id="disabledTextInput" placeholder="Nombre_producto" required>
-            <br>
-            <button type="submit" class="btn btn-primary">Buscar</button>
-        </form>
-        </div>
-    </div>
-
-        <div class="card mt-4">
+        <div class="container mt-5">
+            <div class="card">
             <div class="card-body">
-            <h3 class="mb-3">3. Ver el detalle de tu maestra de productos.</h3>
-            <p style="color: gray;" >Revisa la lista de productos registrados</p>
-            <form action="wMaestra_full/" method="GET"> <!--aqui le digo que cuando apriete el boton del form que escribo despues, me lleve a wMaestra_full-->
-                <button type="submit" class="btn btn-primary">Buscar</button>
-            </form>
+                <h2 class="card-title mb-4 text-center">+ MAESTRA DE PRODUCTOS</h2>
+                <h3 class="mb-3">1. Crea o agrega los productos a tu maestra.</h3>
+
+                    {% if success %} <!--aqui llamo a la variable exitoso de view , que tiene un valor True y asi envio el mensaje -->
+                    <div class="alert alert-success" role="alert">
+                        Formulario creado con éxito.
+                    </div>
+                    {% endif %}
+
+                    {% if maestra_prod.errors %}
+                    <p style="color: red;"> Revisa los datos ingresados.</p>
+                    {% endif %}
+
+                    <form method='POST'>
+                    {% csrf_token %}
+                    <!-- Aca esta la magia de Django -->
+                    <div class="form-group">
+
+                        {{maestra_prod.as_table}}
+
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+                </div>
+            </div>
+        
+
+            <div class="card mt-4">
+                <div class="card-body">
+                <h3 class="mb-3">2. Busca un producto por su nombre.</h3>
+                <p style="color: gray;" >Revisa el detalle del producto registrado que estas buscando.</p>
+                <label for="disabledTextInput">Nombre:</label>
+                    <form action="wMaestra_list/" method="GET">
+                    <input class = "form-control" type="text" name="nombre_producto" id="disabledTextInput" placeholder="Nombre_producto" required>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </form>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-body">
+                <h3 class="mb-3">3. Ver el detalle de tu maestra de productos.</h3>
+                <p style="color: gray;" >Revisa la lista de productos registrados</p>
+                <form action="wMaestra_full/" method="GET"> <!--aqui le digo que cuando apriete el boton del form que escribo despues, me lleve a wMaestra_full-->
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </form>
+                </div>
             </div>
         </div>
-    </div>
 
 {% endblock %}
