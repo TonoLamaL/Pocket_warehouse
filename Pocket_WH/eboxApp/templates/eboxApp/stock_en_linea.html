@@ -8,40 +8,44 @@
 
 {% block contenido_que_cambia %}
 
-<div class="container my-5">
-  <h1 class="text-center my-4">Stock en línea</h1>
-  <h6 aling = "justify-content-center">Aqui verás el stock disponible para vender. Las unidades vendidas ya estan descontadas.</h6>
-  <div class="row">
-    <div class="col">
-      <table class="table">
-        <thead class="thead-light">
-          <tr class = "table-dark">
-            <th>ID de producto</th>
-            <th>SKU</th>
-            <th>Nombre del producto</th>
-            <th>Categoría</th>
-            <th>Unidades disponibles</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for inventario in inventarios %}
-          <tr>
-            <td>{{ inventario.sku.id }}</td>
-            <td>{{ inventario.sku.numero_sku }}</td>
-            <td>{{ inventario.sku.nombre_producto }}</td>
-            <td>{{ inventario.sku.categoria }}</td>
-            <td>{{ inventario.tot_unidades }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+    <div class="container my-5">
+      <div class="card mt-4">
+        <div class="card-body">
+          <h1 class="text-center my-4">Stock en línea</h1>
+          <h6 aling = "justify-content-center">Aqui verás el stock disponible para vender. Las unidades vendidas ya estan descontadas.</h6>
+          <div class="row">
+            <div class="col">
+              <table class="table">
+                <thead class="thead-light">
+                  <tr class = "table-secondary">
+                    <th>ID de producto</th>
+                    <th>SKU</th>
+                    <th>Nombre del producto</th>
+                    <th>Categoría</th>
+                    <th>Unidades disponibles</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for inventario in inventarios %}
+                  <tr>
+                    <td>{{ inventario.sku.id }}</td>
+                    <td>{{ inventario.sku.numero_sku }}</td>
+                    <td>{{ inventario.sku.nombre_producto }}</td>
+                    <td>{{ inventario.sku.categoria }}</td>
+                    <td>{{ inventario.tot_unidades }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row mt-4">
+            <div class="col">
+              <p class="text-muted">El stock se actualiza en línea mientras gestionas tus ingresos/recepciones y tus ventas/egresos</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="row mt-4">
-    <div class="col">
-      <p class="text-muted">El stock se actualiza en línea mientras gestionas tus ingresos/recepciones y tus ventas/egresos</p>
-    </div>
-  </div>
-</div>
 
 {% endblock %}

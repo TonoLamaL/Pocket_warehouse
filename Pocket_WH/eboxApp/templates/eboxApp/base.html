@@ -21,13 +21,13 @@
         <!-- Navigation-->
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container" >
-                <a class="navbar-brand" href="{% url 'eboxApp:Index' %}">
+                <a class="navbar-brand" href="{% url 'eboxApp:Index' %}"> <!--si aprieto el logo me lleva a index también-->
                     <img src="{% static 'eboxApp/assets/img/logoEbox.png' %}" alt="ebox Logo">
                 </a>
                 <a class="navbar-brand" href="{% url 'eboxApp:Index' %}">Inicio </a>
                 <a class="navbar-brand" href="{% url 'eboxApp:Maestra' %}">Maestra de Productos</a>
-                <a class="navbar-brand" href="{% url 'eboxApp:Recepcion' %}">Recepciones</a>
-                <a class="navbar-brand" href="{% url 'eboxApp:Egreso' %}">Egresos</a>
+                <a class="navbar-brand" href="{% url 'eboxApp:Recepcion' %}">Compras</a>
+                <a class="navbar-brand" href="{% url 'eboxApp:Egreso' %}">Ventas</a>
                 <a class="navbar-brand" href="{% url 'eboxApp:stock_en_linea' %}">Stock en Línea</a> 
                 <a class="btn btn-primary" href="#login">Iniciar sesión</a>
             </div>
@@ -102,7 +102,7 @@
                                 <a href="#!"><i class="bi-twitter fs-3"></i></a>
                             </li>
                             <li class="list-inline-item">
-                                <a href="#!"><i class="bi-instagram fs-3"></i></a>
+                                <a href="https://www.instagram.com/eboxfulfillment/" target = "_blank"><i class="bi-instagram fs-3"></i></a> <!--_blank hace que se abra en un anueva pagina-->
                             </li>
                         </ul>
                     </div>

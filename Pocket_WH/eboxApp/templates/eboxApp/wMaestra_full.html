@@ -8,42 +8,46 @@
 {% block contenido_que_cambia %}
 
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <br>
-            <h1 class="text-center my-5">Lista de tu Maestra de productos</h1>
-            {% if producto %}
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr class = "table-dark">
-                                <th scope="col">ID</th>
-                                <th scope="col">Producto</th>
-                                <th scope="col">SKU</th>
-                                <th scope="col">Categoría</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for i in producto %}
-                                <tr>
-                                    <th scope="row">{{ i.pk }}</th>
-                                    <td>{{ i.nombre_producto }}</td>
-                                    <td>{{ i.numero_sku }}</td>
-                                    <td>{{ i.categoria }}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+    <div class="card mt-4">
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <br>
+                    <h1 class="text-center my-5">Lista de tu Maestra de productos</h1>
+                    {% if producto %}
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr class = "table-secondary">
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Producto</th>
+                                        <th scope="col">SKU</th>
+                                        <th scope="col">Categoría</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in producto %}
+                                        <tr>
+                                            <th scope="row">{{ i.pk }}</th>
+                                            <td>{{ i.nombre_producto }}</td>
+                                            <td>{{ i.numero_sku }}</td>
+                                            <td>{{ i.categoria }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="text-center mt-5">
+                            <a class="btn btn-success" href="{% url 'eboxApp:Maestra' %}">Volver</a>
+                        </div>
+                    {% else %}
+                        <div class="text-center">
+                            <h1>No hay datos</h1>
+                            <a class="btn btn-warning" href="{% url 'eboxApp:Maestra' %}">Volver</a>
+                        </div>
+                    {% endif %}
                 </div>
-                <div class="text-center mt-5">
-                    <a class="btn btn-success" href="{% url 'eboxApp:Maestra' %}">Volver</a>
-                </div>
-            {% else %}
-                <div class="text-center">
-                    <h1>No hay datos</h1>
-                    <a class="btn btn-warning" href="{% url 'eboxApp:Maestra' %}">Volver</a>
-                </div>
-            {% endif %}
+            </div>
         </div>
     </div>
 </div>

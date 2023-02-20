@@ -8,45 +8,49 @@
 {% block contenido_que_cambia %}
 
 <div class="container text-center">
-    <h1 class="my-5">Recepciones de productos completas</h1> 
+    <div class="card mt-4">
+        <div class="card-body">
+            <h1 class="my-5">Recepciones de productos completas</h1> 
 
-    {% if recepciones %}
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr class = "table-dark">
-                        <th>ID Recepcion</th>
-                        <th>Contenedor</th>
-                        <th>Fecha de ingreso</th>
-                        <th>ID de producto</th>
-                        <th>SKU</th>
-                        <th>Nombre del producto</th>
-                        <th>Unidades</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for recepcion in recepciones %}
-                        <tr>
-                            <td>{{recepcion.pk}}</td>
-                            <td>{{recepcion.num_contenedor}}</td>
-                            <td>{{recepcion.fecha_recepcion}}</td>
-                            <td>{{recepcion.sku_in.id}}</td>
-                            <td>{{recepcion.sku_in.numero_sku}}</td>
-                            <td>{{recepcion.sku_in.nombre_producto}}</td>
-                            <td>{{recepcion.unidades_in}}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+            {% if recepciones %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class = "table-secondary">
+                                <th>ID Recepcion</th>
+                                <th>Contenedor</th>
+                                <th>Fecha de ingreso</th>
+                                <th>ID de producto</th>
+                                <th>SKU</th>
+                                <th>Nombre del producto</th>
+                                <th>Unidades</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for recepcion in recepciones %}
+                                <tr>
+                                    <td>{{recepcion.pk}}</td>
+                                    <td>{{recepcion.num_contenedor}}</td>
+                                    <td>{{recepcion.fecha_recepcion}}</td>
+                                    <td>{{recepcion.sku_in.id}}</td>
+                                    <td>{{recepcion.sku_in.numero_sku}}</td>
+                                    <td>{{recepcion.sku_in.nombre_producto}}</td>
+                                    <td>{{recepcion.unidades_in}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
 
-        <a class="btn btn-success my-3" href="{% url 'eboxApp:Recepcion' %}">Volver</a>
-    {% else %}
-        <div class="my-5">
-            <h3>No hay datos</h3>
+                <a class="btn btn-success my-3" href="{% url 'eboxApp:Recepcion' %}">Volver</a>
+            {% else %}
+                <div class="my-5">
+                    <h3>No hay datos</h3>
+                </div>
+                <a class="btn btn-warning my-3" href="{% url 'eboxApp:Recepcion' %}">Volver</a>
+            {% endif %}
         </div>
-        <a class="btn btn-warning my-3" href="{% url 'eboxApp:Recepcion' %}">Volver</a>
-    {% endif %}
+    </div>
 </div>
 
 {% endblock %}

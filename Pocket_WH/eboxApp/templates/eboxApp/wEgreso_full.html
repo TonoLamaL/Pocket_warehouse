@@ -4,48 +4,52 @@
 {% block contenido_que_cambia %}
 
 <div class="container">
-    <h1 class="text-center my-5">Lista de Egreso de las órdenes de venta </h1>
+    <div class="card mt-4">
+        <div class="card-body">
+            <h1 class="text-center my-5">Lista de Egreso de las órdenes de venta </h1>
 
-    {% if salidas %}
-    <div class="table-responsive">
-        <table class="table">
-            <thead >
-                <tr class = "table-dark">
-                    <th scope="col">ID Orden</th>
-                    <th scope="col">Orden de venta</th>
-                    <th scope="col">Fecha de despacho</th>
-                    <th scope="col">ID de producto</th>
-                    <th scope="col">SKU</th>
-                    <th scope="col">Nombre del producto</th>
-                    <th scope="col">Unidades</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for i in salidas %}
-                <tr>
-                    <td>{{ i.pk }}</td>
-                    <td>{{ i.orden_venta }}</td>
-                    <td>{{ i.fecha_despacho }}</td>
-                    <td>{{ i.sku_out.id }}</td>
-                    <td>{{ i.sku_out.numero_sku }}</td>
-                    <td>{{ i.sku_out.nombre_producto }}</td>
-                    <td>{{ i.unidades_out }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+            {% if salidas %}
+            <div class="table-responsive">
+                <table class="table">
+                    <thead >
+                        <tr class = "table-secondary">
+                            <th scope="col">ID Orden</th>
+                            <th scope="col">Orden de venta</th>
+                            <th scope="col">Fecha de despacho</th>
+                            <th scope="col">ID de producto</th>
+                            <th scope="col">SKU</th>
+                            <th scope="col">Nombre del producto</th>
+                            <th scope="col">Unidades</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in salidas %}
+                        <tr>
+                            <td>{{ i.pk }}</td>
+                            <td>{{ i.orden_venta }}</td>
+                            <td>{{ i.fecha_despacho }}</td>
+                            <td>{{ i.sku_out.id }}</td>
+                            <td>{{ i.sku_out.numero_sku }}</td>
+                            <td>{{ i.sku_out.nombre_producto }}</td>
+                            <td>{{ i.unidades_out }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
-    <div class="text-center mt-5">
-        <a class="btn btn-success" href="{% url 'eboxApp:Egreso' %}">Volver</a>
-    </div>
+            <div class="text-center mt-5">
+                <a class="btn btn-success" href="{% url 'eboxApp:Egreso' %}">Volver</a>
+            </div>
 
-    {% else %}
-    <div class="text-center">
-        <h1>No hay datos</h1>
-        <a class="btn btn-warning" href="{% url 'eboxApp:Egreso' %}">Volver</a>
+            {% else %}
+            <div class="text-center">
+                <h1>No hay datos</h1>
+                <a class="btn btn-warning" href="{% url 'eboxApp:Egreso' %}">Volver</a>
+            </div>
+            {% endif %}
+        </div>
     </div>
-    {% endif %}
 </div>
 
 {% endblock %}
