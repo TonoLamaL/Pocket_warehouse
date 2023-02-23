@@ -1,0 +1,27 @@
+{% extends "eboxApp/base.html" %}
+    {% load static %}
+{% block contenido_que_cambia %}
+        <div class="container mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title mb-4 text-center">INICIA SESIÓN</h2>
+                    <h3 class="mb-3"></h3>
+
+                        {% if Mensaje %}
+                        <div class="alert alert-success" role="alert">
+                            {{ Mensaje }}
+                        </div>
+                        {% endif %}
+                
+                        <form action="" method = "POST" class = 'form-group'>
+                            <div class = 'form-group'>
+                            {% csrf_token %} 
+                            {{ form_login.as_p}}
+                            <button type = "submit" class="btn btn-primary"> Iniciar sesión </button>
+                            </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

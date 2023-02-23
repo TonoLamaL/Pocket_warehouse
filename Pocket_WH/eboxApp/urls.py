@@ -14,4 +14,7 @@ urlpatterns = [
     path('egreso/wEgreso_full/', views.buscarEgreso, name = 'buscarTodoEgreso'),
     path('stock_en_linea/', views.stock_en_linea, name='stock_en_linea'),
     #path('actualizar_inventario/', views.actualizar_inventario, name='Actualizar'),
+    path('login', views.login_request,name = 'Login' ),
+    path('registro', views.register_request,name = 'Registro' ),
+    path('logout/', views.logout_request, name='logout'),
 ]

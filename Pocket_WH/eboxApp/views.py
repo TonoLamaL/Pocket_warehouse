@@ -4,6 +4,10 @@ from eboxApp.models import *
 from eboxApp.forms import *
 from django.contrib import messages
 from datetime import date, datetime
+# para crear el login lo siguiente
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login, logout, authenticate
+
 
 def index(request):
     ''' Página de inicio '''
@@ -65,11 +69,11 @@ def recepcion(request):
         # una validacion que pide django ({% csrf_token %})
         if recepcion_prod.is_valid():
             informacion = recepcion_prod.cleaned_data
-            nueva_recepcion = Recepcion(num_contenedor = informacion['num_contenedor'], sku_in = informacion['sku_in'], unidades_in = informacion['unidades_in'],fecha_recepcion=date.today()) # asignar la fecha actual) # son los argumentos de la clase y la guardo en el objeto     
+            nueva_recepcion = Recepcion(num_contenedor = informacion['num_contenedor'], sku_in = informacion['sku_in'], unidades_in = informacion['unidades_in'],fecha_recepcion=date.today(), orden_compra = informacion['orden_compra']) # asignar la fecha actual) # son los argumentos de la clase y la guardo en el objeto     
             nueva_recepcion.save()
             success = True
             recepcion_prod = RecepcionForm()
-            return render(request, 'eboxApp/recepcion.html', {'recepcion_prod':recepcion_prod, 'success': success}) # le entrego el conexto de success para me muestre el mensaje que le digo en el html
+            return render(request, 'eboxApp/recepcion.html', {'recepcion_prod':recepcion_prod, 'success': success}) # si funciona que renderizo esto. le entrego el conexto de success para me muestre el mensaje que le digo en el html
             #return render(request, 'eboxApp/windowsConfirm.html') # una vez que se guardo que retorne a la pagina de confrimación, y desde la confirmacion window hice un html que me retorna a inicio
 
             
@@ -158,7 +162,51 @@ def stock_en_linea(request):
     inventarios = Inventario.objects.all()
     return render(request, 'eboxApp/stock_en_linea.html', {'inventarios': inventarios})
  
+ #REGISTRO, LOGIN y LOGOUT -> hay que asignar funciones
  
+ # funciones de django hace automaticamente el trabajo!
+def login_request(request):
+        if request.method == 'POST':
+            form_login = CustomUserLoginForm(data = request.POST)
+
+            if form_login.is_valid():
+                usuario = form_login.cleaned_data.get('username') # el () es del get, debe coicidir con la variable en form
+                contraseña = form_login.cleaned_data.get('password') # debe coicidir con la variable en form
+                
+                user = authenticate(request, username = usuario, password = contraseña)
+                
+                if user is not None: #si usuario no esta vacío (osea si estas logeado)
+                    login(request,user)
+                    return render(request, "eboxApp/index.html", {'Mensaje': f'Bienvenido {usuario}'})
+                else:
+                    form_login = CustomUserLoginForm()
+                    return render(request, "eboxApp/login.html", {'Mensaje': f'Credenciales invalidas', 'form_login': form_login})
+
+            else:
+                form_login = CustomUserLoginForm()
+                return render(request, "eboxApp/login.html", {'Mensaje': f'Credenciales invalidas', 'form_login': form_login})
+            
+        form_login = CustomUserLoginForm()
+        return render (request, "eboxApp/login.html", {'form_login' : form_login})
+    
+#funciones de django hace automaticamente el trabajo! 
+           
+def register_request(request):
+    if request.method == 'POST':
+        form_register = UserRegisterForm(request.POST)
+        
+        if form_register.is_valid():
+            form_register.save()
+            return render(request, "eboxApp/index.html", {'Mensaje': 'Usuario creado'})
+    else:
+        form_register = UserRegisterForm()
+    
+    return render(request, "eboxApp/registro.html", {'form_register': form_register})
+
+def logout_request(request):
+    logout(request)
+    return render (request, "eboxApp/index.html")
+
  # FUNCIONES DE USO INTENRO AQUI ABAJO
 '''
 IR AL SHELL DE DJANGO Y EJECUTAR

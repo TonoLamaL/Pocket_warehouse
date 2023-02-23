@@ -1,0 +1,30 @@
+{% extends "eboxApp/base.html" %}
+    {% load static %}
+{% block contenido_que_cambia %}
+        <div class="container mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title mb-4 text-center">REGÍSTRATE</h2>
+                    <h3 class="mb-3"></h3>
+
+                            {% if Mensaje %}
+                            <div class="alert alert-success" role="alert">
+                                {{ Mensaje }}
+                            </div>
+                            {% endif %}
+                        
+                            <form action="" method = "POST">
+                                <div class = "form-group">
+                                    {% csrf_token %} 
+                                    {{ form_register.as_table }}
+                                    {{ form_register.password }}
+                                    <br>
+                                    <button type = "submit" class="btn btn-primary"> Registrate </button>
+                                </div>
+                            </form>
+                        
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

@@ -13,6 +13,7 @@ class Maestra(models.Model):
 class Recepcion(models.Model):
     ''' Tabla de ingresos de mercadería al sistema por recepciones (deberia sumar unidades al disponible en el sistema)'''
     num_contenedor = models.CharField(max_length=100)
+    orden_compra = models.CharField(max_length=100, null = True)
     sku_in = models.ForeignKey(Maestra, on_delete=models.CASCADE)
     unidades_in = models.IntegerField()
     fecha_recepcion = models.DateField(null=True)
