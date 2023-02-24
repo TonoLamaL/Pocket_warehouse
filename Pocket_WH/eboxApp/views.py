@@ -56,9 +56,40 @@ def buscarMaestra(request):
         
         return render(request, 'eboxApp/wMaestra_full.html', {'producto':producto }) # aqui le digo donde quiero mostrar "producto"
 
+def eliminarProducto(request, numero_sku):
+    '''función para eliminar un prodiucto que ya no quiero tener'''
+    producto = Maestra.objects.get(numero_sku=numero_sku )
+    producto.delete()
+
+    producto = Maestra.objects.all() # debo usar el mismo nombre que cuando renderizo la busqueda completa de la maestra en buscarMaestra
+    return redirect('eboxApp:buscarTodo')
+
+'''debi poner un filtro para que no elimine de la maestra mercaderia que tinee movimientos, mejor hacer editar'''
+
+def editarProducto(request, numero_sku): # la idea es que te llebe devuelta ala paigna de creacion en maestra pero no los datos y modificarlos
+    '''función para editar un producto del catálogo'''
+    producto = Maestra.objects.get(numero_sku=numero_sku )
+    if request.method == 'POST':
+        maestra_prod = MaestraForm(request.POST)
+        print(maestra_prod)
+        
+        if maestra_prod.is_valid():
+            informacion = maestra_prod.cleaned_data
+            
+            producto.nombre_producto = informacion['nombre_producto']
+            producto.numero_sku = informacion['numero_sku']
+            producto.categoria = informacion['categoria']
+
+            producto.save()            
+            return redirect('eboxApp:buscarTodo')
+    else:
+        
+        maestra_prod = MaestraForm(initial={'nombre_producto': producto.nombre_producto, 'numero_sku':producto.numero_sku,'categoria':producto.categoria })
+    
+    return render (request,'eboxApp/editarProducto.html', {'maestra_prod':maestra_prod, 'numero_sku':numero_sku } )
+
 
 # RECEPCIÓN
-
 def recepcion(request):
     " Formulario para crear una recepción que tiene que ingresar productos al inventario"
     success = False

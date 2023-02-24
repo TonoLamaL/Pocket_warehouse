@@ -36,7 +36,7 @@ class Recepcion(models.Model):
     
 class Salida(models.Model):
     ''' Tabla de ventas cargadas en el sistema que deben descontar unidades del inventario'''
-    sku_out = models.ForeignKey(Maestra, on_delete=models.CASCADE)
+    sku_out = models.ForeignKey(Maestra, on_delete=models.CASCADE, null=True)
     unidades_out = models.IntegerField()
     orden_venta = models.CharField(max_length=100)
     fecha_despacho = models.DateField(null=True)

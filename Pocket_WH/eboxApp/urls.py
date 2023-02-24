@@ -17,4 +17,7 @@ urlpatterns = [
     path('login', views.login_request,name = 'Login' ),
     path('registro', views.register_request,name = 'Registro' ),
     path('logout/', views.logout_request, name='logout'),
+    path('eliminarProducto/<numero_sku>/', views.eliminarProducto, name = 'EliminarProducto'),
+    path('editarProducto/<numero_sku>/', views.editarProducto, name = 'EditarProducto'),
+
 ]

@@ -12,7 +12,7 @@
         <div class="card-body">
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    <br>
+                    <br> 
                     <h1 class="text-center my-5">Lista de tu Maestra de productos</h1>
                     {% if producto %}
                         <div class="table-responsive">
@@ -23,6 +23,8 @@
                                         <th scope="col">Producto</th>
                                         <th scope="col">SKU</th>
                                         <th scope="col">Categoría</th>
+                                        <th scope="col">Acción 1</th>
+                                        <th scope="col">Acción 2</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -32,6 +34,14 @@
                                             <td>{{ i.nombre_producto }}</td>
                                             <td>{{ i.numero_sku }}</td>
                                             <td>{{ i.categoria }}</td>
+                                            <td> <button class="btn btn-warning">
+                                               <a  href="{% url 'eboxApp:EliminarProducto' i.numero_sku %}"> Eliminar</a>
+                                                 </button>
+                                            </td>
+                                            <td> <button class="btn btn-warning">
+                                                <a  href="{% url 'eboxApp:EditarProducto' i.numero_sku %}"> Editar</a>
+                                                  </button>
+                                             </td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
