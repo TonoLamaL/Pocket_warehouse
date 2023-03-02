@@ -17,8 +17,6 @@
             <li><p style="color: red;"> Revisa los datos ingresados.</p></li>
             {% endif %}
 
-
-
             {% if messages %}
                 <ul class="messages">
                     {% for message in messages %}
@@ -27,23 +25,20 @@
                 </ul>
             {% endif %}
 
-        
+            <form method='POST'>
+              {% csrf_token %}
+              <!-- Aca esta la magia de Django -->
+              <div class="form-group">
 
-          <form method='POST'>
-            {% csrf_token %}
-            <!-- Aca esta la magia de Django -->
-            <div class="form-group">
+                  {{form.as_table}}
 
-                {{form.as_table}}
-
-            </div>
+              </div>
             <p class="text-muted">* Solo se pueden seleccionar los productos creados en la maestra.</p>
+            <button id="add-sku" type="button" class="btn btn-primary">Agregar SKU - aun no</button> <!--este-->
             <button type="submit" class="btn btn-primary">Enviar</button>
           </form>
         </div>
       </div>
-
-
       <div class="card mt-4">
         <div class="card-body">
           <h3 class="mb-3">2. Ver todo el detalle de las ventas.</h3>
@@ -54,7 +49,8 @@
         </div>
       </div>
     </div>
-   
+  
 
 {% endblock %}
+
 

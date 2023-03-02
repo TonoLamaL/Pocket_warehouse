@@ -16,9 +16,11 @@ class RecepcionForm(forms.Form):
 
 class EgresoForm(forms.Form):
     orden_venta = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),label='N° Orden de venta',max_length=100)
+    fecha_despacho = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control','placeholder': 'Introduce el formato DD-MM-AAAA','format':'%d-%m-%y'}), input_formats =['%d/%m/%Y', '%d/%m/%y', '%d-%m-%Y', '%d-%m-%y', 'dd/mm/yyyy'],label='Fecha de despacho')
+    #cantidad_productos = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}),label='Cantidad de productos',max_value=99999999999)
     sku_out = forms.ModelChoiceField(queryset=Maestra.objects.all(),label='Sku *', widget=forms.Select(attrs={'class': 'form-control'})) 
     unidades_out = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}),label='Unidades vendidas',max_value=99999999999)
-    fecha_despacho = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control','placeholder': 'Introduce el formato DD-MM-AAAA','format':'%d-%m-%y'}), input_formats =['%d/%m/%Y', '%d/%m/%y', '%d-%m-%Y', '%d-%m-%y', 'dd/mm/yyyy'],label='Fecha de despacho')
+    
     
 
 class UserRegisterForm(UserCreationForm):

@@ -9,6 +9,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 
 
+
 def index(request):
     ''' Página de inicio '''
     return render (request, 'eboxApp/index.html')
@@ -139,7 +140,7 @@ def egreso(request):
             fecha_str = fecha_despacho.strftime('%d-%m-%Y') # tranformo la fecha en el formato string 
             fecha_despacho = datetime.strptime(fecha_str, '%d-%m-%Y').date() # uso la fecha de despacho con formato fecha 
 
-            
+
             try:
                 inventario = Inventario.objects.get(sku=sku_out) # intenta buscar el sku de inventario = sku_out de egreso puesto en el formulario.
                 
@@ -157,9 +158,11 @@ def egreso(request):
                     
                     #return render(request, 'eboxApp/windowsConfirm.html') # una vez que se guardo que retorne a la pagina de confrimación, y desde la confirmacion window hice un html que me retorna a inicio
             except ObjectDoesNotExist:
-                Inventario.objects.create(sku=sku_out, tot_unidades=unidades_out)
-                Salida.objects.create(sku_out=sku_out, unidades_out=unidades_out, orden_venta=orden_venta,fecha_despacho=fecha_despacho)
-                return render(request, 'eboxApp/windowsConfirm.html') # creo que esto no aplica porque no puedo crear egresos de prooductos que no existen en la maestra, y me estan quedando ahi cuando estan en cero. Si los elimino cuando llegan a 0 podría ser util
+                #Inventario.objects.create(sku=sku_out, tot_unidades=unidades_out) 
+                messages.error(request, "Aún no haz recibido unidades de este producto. No puedes preparar ese pedido.")
+                return render(request, "eboxApp/egreso.html", {"form": form})
+                #Salida.objects.create(sku_out=sku_out, unidades_out=unidades_out, orden_venta=orden_venta,fecha_despacho=fecha_despacho)
+                #return render(request, 'eboxApp/windowsConfirm.html') # creo que esto no aplica porque no puedo crear egresos de prooductos que no existen en la maestra, y me estan quedando ahi cuando estan en cero. Si los elimino cuando llegan a 0 podría ser util
     else:
         form = EgresoForm()
         success = False
@@ -290,8 +293,8 @@ En este caso, como la clase Recepcion tiene una clave foránea a Maestra, se cre
 Por ejemplo, si tienes una instancia maestra de Maestra, puedes acceder a todas las instancias de Recepcion que tienen una clave foránea a esa instancia utilizando el atributo maestra.recepcion_set.all().
 
 NECESITO:
-- agregar fechas -datafield -> OK (costo mas que la mierda)
-- verificador de orden repetida
+- agregar fechas -datafield -> OK (costo mas que la mierda) 
+- verificador de orden repetida 
 - gráficos de analisis de datos
 - filtro en tablas - agregar un buscador de ordenes 
 - agregar en models Class Categoria: para la construccion de las categorias
