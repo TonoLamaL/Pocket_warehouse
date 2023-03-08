@@ -129,3 +129,5 @@ STATIC_URL = 'static/css/styles.css/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DATE_INPUT_FORMATS = ['%d/%m/%Y', '%d/%m/%y']
+
+LOGIN_URL = "/eboxApp/login"

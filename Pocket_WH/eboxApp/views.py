@@ -7,6 +7,7 @@ from datetime import date, datetime
 # para crear el login lo siguiente
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -16,7 +17,7 @@ def index(request):
 
 
 # MAESTRA 
-
+@login_required
 def maestra(request):
     ''' Formulario para crear nuevos productos en la maestra de productos - te llevo a una ventana distinta con boton volver'''
     success = True
@@ -39,7 +40,7 @@ def maestra(request):
     
     return render(request, 'eboxApp/maestra.html', {'maestra_prod':maestra_prod, 'success': success})
 
-
+@login_required
 def buscarProducto(request):
     ''' Formulario para buscar un producto en especifico por su nombre - te llevo a una ventana distinta con boton volver'''
     if request.method == 'GET': # si existe un get
@@ -48,7 +49,7 @@ def buscarProducto(request):
         producto = Maestra.objects.filter(nombre_producto = busqueda)
         
         return render(request, 'eboxApp/wMaestra_list.html', {'producto':producto , 'busqueda':busqueda })
-    
+@login_required    
 def buscarMaestra(request):
     '''funcion para traer todos los elementos creados en el formulario de maestra'''
     ''' Boton de busqueda completa de la maestra con respuesta en una lista - te llevo a una ventana distinta con boton volver'''
@@ -56,7 +57,7 @@ def buscarMaestra(request):
         producto = Maestra.objects.all() # busco todo lo que hay en la maestra
         
         return render(request, 'eboxApp/wMaestra_full.html', {'producto':producto }) # aqui le digo donde quiero mostrar "producto"
-
+@login_required
 def eliminarProducto(request, numero_sku):
     '''función para eliminar un prodiucto que ya no quiero tener'''
     producto = Maestra.objects.get(numero_sku=numero_sku )
@@ -66,7 +67,7 @@ def eliminarProducto(request, numero_sku):
     return redirect('eboxApp:buscarTodo')
 
 '''debi poner un filtro para que no elimine de la maestra mercaderia que tinee movimientos, mejor hacer editar'''
-
+@login_required
 def editarProducto(request, numero_sku): # la idea es que te llebe devuelta ala paigna de creacion en maestra pero no los datos y modificarlos
     '''función para editar un producto del catálogo'''
     producto = Maestra.objects.get(numero_sku=numero_sku )
@@ -91,6 +92,7 @@ def editarProducto(request, numero_sku): # la idea es que te llebe devuelta ala 
 
 
 # RECEPCIÓN
+@login_required
 def recepcion(request):
     " Formulario para crear una recepción que tiene que ingresar productos al inventario"
     success = False
@@ -108,14 +110,13 @@ def recepcion(request):
             return render(request, 'eboxApp/recepcion.html', {'recepcion_prod':recepcion_prod, 'success': success}) # si funciona que renderizo esto. le entrego el conexto de success para me muestre el mensaje que le digo en el html
             #return render(request, 'eboxApp/windowsConfirm.html') # una vez que se guardo que retorne a la pagina de confrimación, y desde la confirmacion window hice un html que me retorna a inicio
 
-            
-
     else:
         recepcion_prod = RecepcionForm()
         success = False
     
     return render(request, 'eboxApp/recepcion.html', {'recepcion_prod':recepcion_prod})
 
+@login_required
 def buscarRecepcion(request):
     ''' Boton de busqueda completa de las recepciones con respuesta en una lista - te llevo a una ventana distinta con boton volver'''
     if request.method == 'GET': # si existe una solicitud, get 
@@ -124,6 +125,7 @@ def buscarRecepcion(request):
         return render(request, 'eboxApp/wRecepcion_full.html', {'recepciones':recepciones })
 
 # CREACIÓN DE ORDENES
+@login_required
 def egreso(request):
     " Formulario para crear un egreso que tiene que salir productos al inventario"
     success = False
@@ -177,7 +179,7 @@ El diccionario de contexto se pasa como argumento a la función render(), que se
 Los elementos del diccionario se pueden acceder en la plantilla HTML utilizando el sistema de plantillas de Django, que utiliza etiquetas como {{}} o {% %}.
 
 '''
-
+@login_required
 def buscarEgreso(request):
     ''' Boton de busqueda completa de las ordenes de compra con respuesta en una lista - te llevo a una ventana distinta con boton volver'''
     if request.method == 'GET': # si existe un post
@@ -189,7 +191,7 @@ def buscarEgreso(request):
 
 # INVENTARIO
 
-
+@login_required
 def stock_en_linea(request):
     '''funcion para revisar el stock en linea - esta es solo para mostrar - las funciones son
     parte de las clases Recepcion y Salida '''
@@ -199,6 +201,7 @@ def stock_en_linea(request):
  #REGISTRO, LOGIN y LOGOUT -> hay que asignar funciones
  
  # funciones de django hace automaticamente el trabajo!
+
 def login_request(request):
         if request.method == 'POST':
             form_login = CustomUserLoginForm(data = request.POST)
@@ -250,7 +253,7 @@ from eboxApp.views import migrar_inventario, actualizar_inventariof
 migrar_inventario()
 actualizar_inventario()
 '''
-
+@login_required
 def actualizar_inventario():#agregar request si quiero que sea desde una web:
     '''funcion para actualizar el inventario en unidades - lo necesitaba porque la ultima clase que cree fue inventario'''
     inventario = Inventario.objects.all()
@@ -260,7 +263,7 @@ def actualizar_inventario():#agregar request si quiero que sea desde una web:
         inv.save()
 
     #return HttpResponse ('eboxApp/actualizar_inventario.html')
-
+@login_required
 def migrar_inventario():
     '''Función que actualiza el inventario a partir de los registros en las tablas de Recepcion y Salida
     - lo necesitaba porque la ultima clase que cree fue inventario'''

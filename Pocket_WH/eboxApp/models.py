@@ -10,6 +10,7 @@ class Maestra(models.Model):
     def __str__(self):
         return f'{self.pk} (PK) | Nombre Producto: {self.nombre_producto}   |   Sku: {self.numero_sku}   |   Categoría: {self.categoria}'
 
+
 class Recepcion(models.Model):
     ''' Tabla de ingresos de mercadería al sistema por recepciones (deberia sumar unidades al disponible en el sistema)'''
     num_contenedor = models.CharField(max_length=100)
@@ -31,9 +32,7 @@ class Recepcion(models.Model):
             inventario.save()
         except ObjectDoesNotExist:
             Inventario.objects.create(sku=self.sku_in, tot_unidades=self.unidades_in) # no esta sirviendo ya que si no esta en la maestra no funciona - resolver
-            
 
-    
 class Salida(models.Model):
     ''' Tabla de ventas cargadas en el sistema que deben descontar unidades del inventario'''
     sku_out = models.ForeignKey(Maestra, on_delete=models.CASCADE, null=True)
