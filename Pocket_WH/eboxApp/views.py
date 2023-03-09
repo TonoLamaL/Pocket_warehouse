@@ -131,8 +131,6 @@ def egreso(request):
     success = False
     if request.method == "POST":
         form = EgresoForm(data=request.POST)
-        print (form)
-    
         if form.is_valid():
             sku_out = form.cleaned_data["sku_out"]
             unidades_out = form.cleaned_data["unidades_out"]
@@ -142,34 +140,34 @@ def egreso(request):
             fecha_str = fecha_despacho.strftime('%d-%m-%Y') # tranformo la fecha en el formato string 
             fecha_despacho = datetime.strptime(fecha_str, '%d-%m-%Y').date() # uso la fecha de despacho con formato fecha 
 
-
             try:
                 inventario = Inventario.objects.get(sku=sku_out) # intenta buscar el sku de inventario = sku_out de egreso puesto en el formulario.
                 
-                if inventario.tot_unidades - unidades_out < 0: # accedo a la variable inventario
+                if inventario.unidades_disponibles - unidades_out < 0: # accedo a la variable inventario
                     messages.error(request, "No puedes preparar ese pedido. Las unidades que pides no alcanzan, ajusta las unidades.")
                     print(messages)
                     return render(request, "eboxApp/egreso.html", {"form": form})
                 else:
-                    Salida.objects.create(sku_out=sku_out, unidades_out=unidades_out, orden_venta=orden_venta, fecha_despacho=fecha_despacho, estado=Estados.objects.get(pk=1))
-                    # inventario.tot_unidades -= unidades_out
+                    # Actualiza las unidades disponibles y las unidades reservadas
+                    inventario.unidades_reservadas += unidades_out
+                    inventario.unidades_disponibles = inventario.tot_unidades - inventario.unidades_reservadas
                     inventario.save()
+
+                    Salida.objects.create(sku_out=sku_out, unidades_out=unidades_out, orden_venta=orden_venta, fecha_despacho=fecha_despacho, estado=Estados.objects.get(pk=1))
+                    
                     success = True
                     form = EgresoForm()
-                    return render(request, 'eboxApp/egreso.html', {'form':form, 'success': success}) # le entrego el conexto de success para me muestre el mensaje que le digo en el html
+                    return render(request, 'eboxApp/egreso.html', {'form':form, 'success': success})
                     
-                    #return render(request, 'eboxApp/windowsConfirm.html') # una vez que se guardo que retorne a la pagina de confrimación, y desde la confirmacion window hice un html que me retorna a inicio
             except ObjectDoesNotExist:
-                #Inventario.objects.create(sku=sku_out, tot_unidades=unidades_out) 
                 messages.error(request, "Aún no haz recibido unidades de este producto. No puedes preparar ese pedido.")
                 return render(request, "eboxApp/egreso.html", {"form": form})
-                #Salida.objects.create(sku_out=sku_out, unidades_out=unidades_out, orden_venta=orden_venta,fecha_despacho=fecha_despacho)
-                #return render(request, 'eboxApp/windowsConfirm.html') # creo que esto no aplica porque no puedo crear egresos de prooductos que no existen en la maestra, y me estan quedando ahi cuando estan en cero. Si los elimino cuando llegan a 0 podría ser util
     else:
         form = EgresoForm()
         success = False
 
     return render(request, "eboxApp/egreso.html", {"form": form})
+
 
 
 
@@ -222,9 +220,10 @@ def actualizarEstado(request, id_salida):
         if form.is_valid():
             nuevo_estado = form.cleaned_data['estado']
             unidades = salida.unidades_out  # obtener las unidades de la salida
-            if nuevo_estado.pk not in [1, 4]:  # si el estado no es 'Pendiente' o "cancelado"
+            if nuevo_estado.pk not in [1, 4, 3]:  # si el estado no es 'Pendiente' o "cancelado"
                 inventario = Inventario.objects.get(sku=salida.sku_out)
-                inventario.tot_unidades -= unidades  # actualizar el inventario
+                inventario.unidades_reservadas -= unidades
+                inventario.tot_unidades -= unidades# actualizar el inventario
                 inventario.save()
             salida.estado = nuevo_estado
             salida.save()

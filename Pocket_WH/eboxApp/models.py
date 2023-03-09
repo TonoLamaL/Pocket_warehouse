@@ -29,6 +29,7 @@ class Recepcion(models.Model):
         try:
             inventario = Inventario.objects.get(sku=self.sku_in)
             inventario.tot_unidades += self.unidades_in
+            inventario.unidades_disponibles += self.unidades_in
             inventario.save()
         except ObjectDoesNotExist:
             Inventario.objects.create(sku=self.sku_in, tot_unidades=self.unidades_in) # no esta sirviendo ya que si no esta en la maestra no funciona - resolver
@@ -51,27 +52,38 @@ class Salida(models.Model):
     def __str__(self):
         return f'{self.pk} (PK) | Sku: {self.sku_out}   |   Unidades: {self.unidades_out}  |  OC: {self.orden_venta} | Pk = {self.pk} | Pk = {self.estado}' 
     
-def save(self, *args, **kwargs):
-    '''funcion para actualizar en linea las unidades segun las salidas a la base de datos de inventario por sku '''
-    try:
-        inventario = Inventario.objects.get(sku=self.sku_out)
-        if self.estado.pk != 1 and self.estado.pk != 4:  # Si el estado no es 'Pendiente' o 'Cancelado'
-            if inventario.tot_unidades - self.unidades_out < 0:
+    def save(self, *args, **kwargs):
+        '''funcion para actualizar en linea las unidades segun las salidas a la base de datos de inventario por sku '''
+        try:
+            inventario = Inventario.objects.get(sku=self.sku_out)
+            if inventario.unidades_disponibles >= self.unidades_out:
+                inventario.unidades_reservadas += self.unidades_out
+                inventario.unidades_disponibles -= self.unidades_out
+                inventario.save()
+                super(Salida, self).save(*args, **kwargs)
+            else:
                 raise ValueError("No puedes preparar ese pedido, no te alcanzan las unidades, ajusta las unidades del pedido")
-            inventario.tot_unidades -= self.unidades_out
-            inventario.save()
-        super(Salida, self).save(*args, **kwargs)
-    except ObjectDoesNotExist:
-        Inventario.objects.create(sku=self.sku_out, tot_unidades=self.unidades_out)
-        super(Salida, self).save(*args, **kwargs)
-
+        except ObjectDoesNotExist:
+            Inventario.objects.create(sku=self.sku_out, tot_unidades=self.unidades_out, unidades_reservadas=self.unidades_out, unidades_disponibles=self.unidades_out)
+            super(Salida, self).save(*args, **kwargs)
+        
+        
 class Inventario(models.Model):
     ''' Tabla de inventario disponible en el sistema'''
     sku = models.ForeignKey(Maestra, on_delete=models.CASCADE, null=True)
     tot_unidades = models.IntegerField(null=True)
+    unidades_reservadas = models.IntegerField(default=0)
+    unidades_disponibles = models.IntegerField(null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.pk:  # Si la instancia es nueva (no tiene primary key)
+            self.unidades_disponibles = self.tot_unidades
+        super(Inventario, self).save(*args, **kwargs)
+
+
     
     def __str__(self):
-        return f'{self.pk} (PK) | Sku: {self.sku}   |   Unidades: {self.tot_unidades} | Pk = {self.pk}'
+        return f'{self.pk} (PK) | Sku: {self.sku}   |   Unidades: {self.tot_unidades} |   Unidades: {self.unidades_reservadas} |   Unidades: {self.unidades_disponibles}'
 
 
     

@@ -33,6 +33,8 @@
                     <th>SKU</th>
                     <th>Nombre del producto</th>
                     <th>Categoría</th>
+                    <th>Unidades totales</th>
+                    <th>Unidades reservadas</th>
                     <th>Unidades disponibles</th>
                   </tr>
                 </thead>
@@ -44,6 +46,8 @@
                     <td>{{ inventario.sku.nombre_producto }}</td>
                     <td>{{ inventario.sku.categoria }}</td>
                     <td>{{ inventario.tot_unidades }}</td>
+                    <td>{{ inventario.unidades_reservadas }}</td>
+                    <td>{{ inventario.unidades_disponibles }}</td>
                   </tr>
                   {% endfor %}
                 </tbody>
