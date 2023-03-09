@@ -1,0 +1,48 @@
+{% extends "eboxApp/base.html" %}
+    {% load static %}
+{% block contenido_que_cambia %}
+
+<div class="container my-5">
+  <div class="card mt-4">
+    <div class="card-body">
+      <h1 class="text-center my-4">Pedidos pendientes de despacho</h1>
+      <h6 aling = "justify-content-center"></h6>
+      <div class="row">
+
+            {% if pedidos_pendientes %}
+            <div class="col">
+              <table class="table">
+                <thead class="thead-light">
+                  <tr class = "table-secondary">
+                    <th>Orden de venta</th>
+                    <th>ID de producto</th>
+                    <th>SKU</th>
+                    <th>Nombre del producto</th>
+                    <th>Unidades</th>
+                    <th>Estado</th>
+                    <th>Fecha de despacho</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for pedido in pedidos_pendientes %}
+                    <tr>
+                      <td>{{ pedido.orden_venta }}</td>
+                      <td>{{ pedido.sku_out.id }}</td>
+                      <td>{{ pedido.sku_out.numero_sku }}</td>
+                      <td>{{ pedido.sku_out.nombre_producto }}</td>
+                      <td>{{ pedido.unidades_out }}</td>
+                      <td>{{ pedido.estado.estado }}</td>
+                      <td>{{ pedido.fecha_despacho }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% else %}
+              <p>No hay pedidos pendientes de despacho.</p>
+            {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}

@@ -16,12 +16,12 @@
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'eboxApp/css/styles.css' %}" rel="stylesheet" />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        {% comment %} <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> {% endcomment %}
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNSqnEw" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        {% comment %} <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> {% endcomment %}
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         
     </head>
@@ -40,42 +40,53 @@
                   <li class="nav-item active">
                     <a class="nav-link" href="{% url 'eboxApp:Index' %}">Inicio</a>
                   </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="#"></a>
+                  </li>
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Herramientas <i class="bi bi-list"></i></a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <a class="dropdown-item" href="{% url 'eboxApp:Maestra' %}">Agregar producto al catálogo</a>
+                          <a class="dropdown-item" href="{% url 'eboxApp:Recepcion' %}">Agregar compras</a>
+                          <a class="dropdown-item" href="{% url 'eboxApp:Egreso' %}">Agregar ventas</a>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Herramientas <i class="bi bi-list"></i></a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{% url 'eboxApp:Maestra' %}">Agregar producto al catálogo</a>
-                        <a class="dropdown-item" href="{% url 'eboxApp:Recepcion' %}">Agregar compras</a>
-                        <a class="dropdown-item" href="{% url 'eboxApp:Egreso' %}">Agregar ventas</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{% url 'eboxApp:stock_en_linea' %}">Stock en Línea</a>
-                        <a class="dropdown-item" href="{% url 'eboxApp:buscarTodo' %}">Ver catálogo</a>
-                        <a class="dropdown-item" href="{% url 'eboxApp:buscarTodoRecepcion' %}">Ver compras</a>
-                        <a class="dropdown-item" href="{% url 'eboxApp:buscarTodoEgreso' %}">Ver ventas</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{% url 'eboxApp:Registro' %}">Regístrate ahora</a>
-                    </div>
-                </li>
-                <li class="nav-item active">
-                  <a class="nav-link" href="#"></a>
-                </li>
-                <li class="nav-item active">
-                  <a class="nav-link" href="#Comosehace">Pasos a seguir</a>
-                </li>
+                          <div class="dropdown-divider"></div>
+
+                          <a class="dropdown-item" href="{% url 'eboxApp:stock_en_linea' %}">Stock en Línea</a>
+                          <a class="dropdown-item" href="{% url 'eboxApp:despachos_pendientes' %}">Despachos pendientes</a>
+
+                          <div class="dropdown-divider"></div>
+
+                          <a class="dropdown-item" href="{% url 'eboxApp:buscarTodo' %}">Ver catálogo</a>
+                          <a class="dropdown-item" href="{% url 'eboxApp:buscarTodoRecepcion' %}">Ver compras</a>
+                          <a class="dropdown-item" href="{% url 'eboxApp:buscarTodoEgreso' %}">Ver ventas</a>
+
+                          <div class="dropdown-divider"></div>
+                          
+                          <a class="dropdown-item" href="{% url 'eboxApp:Registro' %}">Regístrate ahora</a>
+                      </div>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="#"></a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="#Comosehace">Pasos a seguir</a>
+                  </li>
                 </ul>
                 {% comment %} <form  action="wMaestra_list/" method="GET" class="form-inline my-2 my-lg-0">
                   <input class="form-control mr-sm-2" type="text" name="nombre_producto" placeholder="Buscar producto" aria-label="Buscar">
                   <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
                 </form> {% endcomment %}
 
+                
                 {% if user.is_authenticated %}
-                <ul class="navbar-nav ml-lg-2">
+                <ul class="navbar-nav ml-auto">
                   <li class="nav-item">
                     <a class="nav-link btn btn-outline-primary" href="{% url 'eboxApp:logout' %}">{{ user.username }} -> Logout</a>
                   </li>
                 </ul>
                 {% else %}
-                <ul class="navbar-nav ml-lg-2">
+                <ul class="navbar-nav ml-auto">
                   <li class="nav-item">
                     <a class="nav-link btn btn-outline-primary" href="{% url 'eboxApp:Login' %}">Iniciar Sesión</a>
                   </li>

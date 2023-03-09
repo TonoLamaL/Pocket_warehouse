@@ -12,7 +12,18 @@
       <div class="card mt-4">
         <div class="card-body">
           <h1 class="text-center my-4">Stock en línea</h1>
-          <h6 aling = "justify-content-center">Aqui verás el stock disponible para vender. Las unidades vendidas ya estan descontadas.</h6>
+          <h6 class="text-center my-4" aling = "justify-content-center">Aqui verás las mercadería que tienes. No esta descontado lo que aun no preparas. Debes cambiar el estado para descontar unidades.</h6>
+
+          <div class="container my-5">
+            <div class="card mt-4">
+              <div class="card-body">
+                <div class="text-center">
+                  <p>Para cambiar estado entra aquí</p>
+                  <a href="{% url 'eboxApp:buscarTodoEgreso' %}" class="btn btn-primary">Cambiar estados</a>
+              </div>
+            </div>
+          </div>
+        </div>
           <div class="row">
             <div class="col">
               <table class="table">

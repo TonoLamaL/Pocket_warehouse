@@ -151,8 +151,8 @@ def egreso(request):
                     print(messages)
                     return render(request, "eboxApp/egreso.html", {"form": form})
                 else:
-                    Salida.objects.create(sku_out=sku_out, unidades_out=unidades_out, orden_venta=orden_venta, fecha_despacho=fecha_despacho)
-                    inventario.tot_unidades -= unidades_out
+                    Salida.objects.create(sku_out=sku_out, unidades_out=unidades_out, orden_venta=orden_venta, fecha_despacho=fecha_despacho, estado=Estados.objects.get(pk=1))
+                    # inventario.tot_unidades -= unidades_out
                     inventario.save()
                     success = True
                     form = EgresoForm()
@@ -170,6 +170,19 @@ def egreso(request):
         success = False
 
     return render(request, "eboxApp/egreso.html", {"form": form})
+
+
+
+@login_required
+def despachos_pendientes(request):
+    # Obtener la fecha actual para compararla con la fecha de despacho de los pedidos
+    fecha_actual = date.today()
+
+    # Obtener todos los pedidos pendientes de despacho cuya fecha de despacho sea posterior o igual a la fecha actual
+    pedidos_pendientes = Salida.objects.filter(fecha_despacho__gte=fecha_actual)
+
+    return render(request, "eboxApp/despachos_pendientes.html", {"pedidos_pendientes": pedidos_pendientes})
+
 '''
 PARA QUE ES EL CONTEXTO EN UN RENDER:
 
@@ -182,10 +195,52 @@ Los elementos del diccionario se pueden acceder en la plantilla HTML utilizando 
 @login_required
 def buscarEgreso(request):
     ''' Boton de busqueda completa de las ordenes de compra con respuesta en una lista - te llevo a una ventana distinta con boton volver'''
-    if request.method == 'GET': # si existe un post
+    if request.method == 'GET':
+        form = SelectEstados()
         salidas = Salida.objects.all()
         
-        return render(request, 'eboxApp/wEgreso_full.html', {'salidas':salidas })
+        return render(request, 'eboxApp/wEgreso_full.html', {'salidas':salidas, 'form': form})
+    elif request.method == 'POST':
+        form = SelectEstados(request.POST)
+        salidas = Salida.objects.all()
+        if form.is_valid():
+            estado = form.cleaned_data['estado']
+            seleccionados = request.POST.getlist('seleccionados')
+            Salida.objects.filter(pk__in=seleccionados).update(estado=estado)
+            return redirect('eboxApp:buscarTodoEgreso')
+        
+        return render(request, 'eboxApp/wEgreso_full.html', {'salidas':salidas, 'form': form})
+
+
+
+
+@login_required
+def actualizarEstado(request, id_salida):
+    salida = Salida.objects.get(pk=id_salida)
+    if request.method == 'POST':
+        form = SelectEstados(request.POST)
+        if form.is_valid():
+            nuevo_estado = form.cleaned_data['estado']
+            unidades = salida.unidades_out  # obtener las unidades de la salida
+            if nuevo_estado.pk not in [1, 4]:  # si el estado no es 'Pendiente' o "cancelado"
+                inventario = Inventario.objects.get(sku=salida.sku_out)
+                inventario.tot_unidades -= unidades  # actualizar el inventario
+                inventario.save()
+            salida.estado = nuevo_estado
+            salida.save()
+            return redirect('eboxApp:buscarTodoEgreso')
+    else:
+        form = SelectEstados(initial={'estado': salida.estado})
+    return render(request, 'eboxApp/actualizar_estado.html', {'form': form, 'salida': salida})
+
+
+
+
+
+
+
+
+
 
 
 
@@ -202,6 +257,7 @@ def stock_en_linea(request):
  
 
 def login_request(request):
+        '''función de inicio de sesion'''
         if request.method == 'POST':
             form_login = CustomUserLoginForm(data = request.POST)
 
@@ -228,6 +284,7 @@ def login_request(request):
 #funciones de django hace automaticamente el trabajo! 
            
 def register_request(request):
+    """función de registro"""
     if request.method == 'POST':
         form_register = UserRegisterForm(request.POST)
         
@@ -240,13 +297,16 @@ def register_request(request):
     return render(request, "eboxApp/registro.html", {'form_register': form_register})
 
 def logout_request(request):
+    """función logout"""
     logout(request)
     return render (request, "eboxApp/index.html")
 
 def about(request):
+    """pagina quienes somos"""
     return render (request,"eboxApp/about.html")
 
 def terms(request):
+    """termino y condiciones"""
     return render (request,"eboxApp/terms.html")
 
  # FUNCIONES DE USO INTENRO AQUI ABAJO llamdas desde la terminal
