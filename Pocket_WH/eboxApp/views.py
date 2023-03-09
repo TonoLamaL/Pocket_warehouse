@@ -200,7 +200,6 @@ def stock_en_linea(request):
  
  #REGISTRO, LOGIN y LOGOUT -> hay que asignar funciones
  
- # funciones de django hace automaticamente el trabajo!
 
 def login_request(request):
         if request.method == 'POST':
@@ -244,7 +243,14 @@ def logout_request(request):
     logout(request)
     return render (request, "eboxApp/index.html")
 
- # FUNCIONES DE USO INTENRO AQUI ABAJO
+def about(request):
+    return render (request,"eboxApp/about.html")
+
+def terms(request):
+    return render (request,"eboxApp/terms.html")
+
+ # FUNCIONES DE USO INTENRO AQUI ABAJO llamdas desde la terminal
+ 
 '''
 IR AL SHELL DE DJANGO Y EJECUTAR
 
@@ -253,7 +259,7 @@ from eboxApp.views import migrar_inventario, actualizar_inventariof
 migrar_inventario()
 actualizar_inventario()
 '''
-@login_required
+
 def actualizar_inventario():#agregar request si quiero que sea desde una web:
     '''funcion para actualizar el inventario en unidades - lo necesitaba porque la ultima clase que cree fue inventario'''
     inventario = Inventario.objects.all()
@@ -263,7 +269,7 @@ def actualizar_inventario():#agregar request si quiero que sea desde una web:
         inv.save()
 
     #return HttpResponse ('eboxApp/actualizar_inventario.html')
-@login_required
+
 def migrar_inventario():
     '''Función que actualiza el inventario a partir de los registros en las tablas de Recepcion y Salida
     - lo necesitaba porque la ultima clase que cree fue inventario'''

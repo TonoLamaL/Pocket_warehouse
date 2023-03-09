@@ -40,13 +40,13 @@
                   <li class="nav-item active">
                     <a class="nav-link" href="{% url 'eboxApp:Index' %}">Inicio</a>
                   </li>
-                </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Herramientas <i class="bi bi-list"></i></a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{% url 'eboxApp:Maestra' %}">Catálogo de Productos</a>
-                        <a class="dropdown-item" href="{% url 'eboxApp:Recepcion' %}">Compras</a>
-                        <a class="dropdown-item" href="{% url 'eboxApp:Egreso' %}">Ventas</a>
+                        <a class="dropdown-item" href="{% url 'eboxApp:Maestra' %}">Agregar producto al catálogo</a>
+                        <a class="dropdown-item" href="{% url 'eboxApp:Recepcion' %}">Agregar compras</a>
+                        <a class="dropdown-item" href="{% url 'eboxApp:Egreso' %}">Agregar ventas</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{% url 'eboxApp:stock_en_linea' %}">Stock en Línea</a>
                         <a class="dropdown-item" href="{% url 'eboxApp:buscarTodo' %}">Ver catálogo</a>
@@ -55,6 +55,12 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{% url 'eboxApp:Registro' %}">Regístrate ahora</a>
                     </div>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="#"></a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="#Comosehace">Pasos a seguir</a>
                 </li>
                 </ul>
                 {% comment %} <form  action="wMaestra_list/" method="GET" class="form-inline my-2 my-lg-0">
@@ -130,23 +136,20 @@
                 <div class="row">
                     <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
                         <ul class="list-inline mb-2">
-                            <li class="list-inline-item"><a href="#!">About</a></li>
+                            <li class="list-inline-item"><a href="{% url 'eboxApp:about' %}">About</a></li>
                             <li class="list-inline-item">⋅</li>
-                            <li class="list-inline-item"><a href="#!">Contact</a></li>
+                            <li class="list-inline-item"><a href="{% url 'eboxApp:Index' %}#signup">Contact</a></li>
                             <li class="list-inline-item">⋅</li>
-                            <li class="list-inline-item"><a href="#!">Terms of Use</a></li>
-                            <li class="list-inline-item">⋅</li>
-                            <li class="list-inline-item"><a href="#!">Privacy Policy</a></li>
+                            <li class="list-inline-item"><a href="{% url 'eboxApp:Terms' %}">Terms of Use</a></li>
+                            {% comment %} <li class="list-inline-item">⋅</li> {% endcomment %}
+                            {% comment %} <li class="list-inline-item"><a href="#!">Privacy Policy</a></li> {% endcomment %}
                         </ul>
                         <p class="text-muted small mb-4 mb-lg-0">&copy; EBOX & Pocket-warehouse 2023. All Rights Reserved.</p>
                     </div>
                     <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
                         <ul class="list-inline mb-0">
                             <li class="list-inline-item me-4">
-                                <a href="#!"><i class="bi-facebook fs-3"></i></a>
-                            </li>
-                            <li class="list-inline-item me-4">
-                                <a href="#!"><i class="bi-twitter fs-3"></i></a>
+                                <a href="http://www.ebox3pl.cl"><i class="bi-globe fs-3"></i></a>
                             </li>
                             <li class="list-inline-item">
                                 <a href="https://www.instagram.com/eboxfulfillment/" target = "_blank"><i class="bi-instagram fs-3"></i></a> <!--_blank hace que se abra en un anueva pagina-->
