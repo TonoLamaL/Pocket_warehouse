@@ -1,0 +1,20 @@
+{% extends "eboxApp/base.html" %}
+{% load static %}
+
+{% block contenido_que_cambia %}
+<div class="container">
+  <div class="card mt-4">
+    <div class="card-body">
+      <h1 class="text-center my-5">Actualizar estado del registro</h1>
+      <div class="table-responsive">
+        <form method="post">
+          {% csrf_token %}
+          {{ form.estado }}
+          <br>
+          <button type="submit" name="accion" value="actualizar" class="btn btn-primary">Actualizar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

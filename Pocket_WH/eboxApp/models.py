@@ -46,7 +46,7 @@ class Salida(models.Model):
     unidades_out = models.IntegerField()
     orden_venta = models.CharField(max_length=100)
     fecha_despacho = models.DateField(null=True)
-    estado = models.ForeignKey(Estados, on_delete=models.CASCADE, null=True, default=1)
+    estado = models.ForeignKey(Estados, on_delete=models.CASCADE, null=True)
     
     def __str__(self):
         return f'{self.pk} (PK) | Sku: {self.sku_out}   |   Unidades: {self.unidades_out}  |  OC: {self.orden_venta} | Pk = {self.pk} | Pk = {self.estado}' 

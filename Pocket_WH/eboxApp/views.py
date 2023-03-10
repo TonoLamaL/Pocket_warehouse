@@ -153,7 +153,7 @@ def egreso(request):
                     inventario.unidades_disponibles = inventario.tot_unidades - inventario.unidades_reservadas
                     inventario.save()
 
-                    Salida.objects.create(sku_out=sku_out, unidades_out=unidades_out, orden_venta=orden_venta, fecha_despacho=fecha_despacho, estado=Estados.objects.get(pk=1))
+                    Salida.objects.create(sku_out=sku_out, unidades_out=unidades_out, orden_venta=orden_venta, fecha_despacho=fecha_despacho, estado=Estados.objects.get(pk=1)) # predeterminado en estado pendiente
                     
                     success = True
                     form = EgresoForm()
@@ -214,31 +214,28 @@ def buscarEgreso(request):
 
 @login_required
 def actualizarEstado(request, id_salida):
-    salida = Salida.objects.get(pk=id_salida)
     if request.method == 'POST':
         form = SelectEstados(request.POST)
         if form.is_valid():
             nuevo_estado = form.cleaned_data['estado']
+            salida = Salida.objects.get(pk=id_salida)
             unidades = salida.unidades_out  # obtener las unidades de la salida
+            inventario = Inventario.objects.get(sku=salida.sku_out)
             if nuevo_estado.pk not in [1, 4, 3]:  # si el estado no es 'Pendiente' o "cancelado"
-                inventario = Inventario.objects.get(sku=salida.sku_out)
                 inventario.unidades_reservadas -= unidades
-                inventario.tot_unidades -= unidades# actualizar el inventario
+                inventario.tot_unidades -= unidades # actualizar el inventario
+                inventario.save()
+            elif nuevo_estado.pk == 4: # si el estado es "cancelado"
+                inventario.unidades_reservadas += unidades
+                inventario.tot_unidades += unidades # actualizar el inventario
                 inventario.save()
             salida.estado = nuevo_estado
             salida.save()
             return redirect('eboxApp:buscarTodoEgreso')
     else:
+        salida = Salida.objects.get(pk=id_salida)
         form = SelectEstados(initial={'estado': salida.estado})
     return render(request, 'eboxApp/actualizar_estado.html', {'form': form, 'salida': salida})
-
-
-
-
-
-
-
-
 
 
 

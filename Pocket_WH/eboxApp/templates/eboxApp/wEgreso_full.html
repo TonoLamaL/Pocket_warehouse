@@ -6,6 +6,9 @@
   <div class="card mt-4">
     <div class="card-body">
       <h1 class="text-center my-5">Lista de Egreso de las órdenes de venta</h1>
+      <p>Solo el estado "Preparado" descontará las unidades de tu stock en linea</p>
+      <p>El estado cancelado retornará unidades a tu stock - ten cuidado de no hacerlo cuando ya haya sido entregado</p>
+      <p>El estado entregado es solo informativo</p>
       {% if salidas %}
       <div class="table-responsive">
         <form method="post">
@@ -22,7 +25,7 @@
                 <th>Unidades</th>
                 <th>Estado actual</th>
                 <th>Cambiar estado</th>
-                <th>Acción</th>
+
               </tr>
             </thead>
             <tbody>
@@ -37,19 +40,8 @@
                 <td>{{ salida.unidades_out }}</td>
                 <td>{{ salida.estado.estado }}</td>
                 <td>
-                    <div class="form-group row mb-0">
-                      <div class="col-md-8">
-                        <form method="post" action="{% url 'eboxApp:actualizar_estados' id_salida=salida.id %}">
-                          {% csrf_token %}
-                          {{ form.estado }}
-                      </div>
-                      <div class="col-md-3">
-                          <button type="submit" name="accion" value="actualizar" class="btn btn-primary">Actualizar</button>
-                        </form>
-                      </div>
-                    </div>
-                  </td>
-                  <td></td>
+                  <a href="{% url 'eboxApp:actualizar_estados' id_salida=salida.pk %}" class="btn btn-primary">Cambiar</a>
+              </td>
             </tr>
               {% endfor %}
             </tbody>
@@ -62,6 +54,7 @@
         <a class="btn btn-warning" href="{% url 'eboxApp:Egreso' %}">Volver</a>
       </div>
       {% endif %}
+      
     </div>
   </div>
 </div>

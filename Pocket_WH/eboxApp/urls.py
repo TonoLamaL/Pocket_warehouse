@@ -23,8 +23,8 @@ urlpatterns = [
     path('terms/', views.terms, name='Terms'),
     path('despachos_pendientes/', views.despachos_pendientes, name='despachos_pendientes'),
     path('salida/<int:id_salida>/actualizar_estados/', views.actualizarEstado, name='actualizar_estados'),
+    
 
 
 
 ]
-
