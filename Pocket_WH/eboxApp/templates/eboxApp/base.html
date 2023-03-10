@@ -46,24 +46,24 @@
                   <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Herramientas <i class="bi bi-list"></i></a>
                       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <a class="dropdown-item" href="{% url 'eboxApp:Maestra' %}">Agregar producto al catálogo</a>
-                          <a class="dropdown-item" href="{% url 'eboxApp:Recepcion' %}">Agregar compras</a>
-                          <a class="dropdown-item" href="{% url 'eboxApp:Egreso' %}">Agregar ventas</a>
+                          <a class="dropdown-item" href="{% url 'eboxApp:Maestra' %}#maestra">Agregar producto al catálogo</a>
+                          <a class="dropdown-item" href="{% url 'eboxApp:Recepcion' %}#compras">Agregar compras</a>
+                          <a class="dropdown-item" href="{% url 'eboxApp:Egreso' %}#ventas">Agregar ventas</a>
 
                           <div class="dropdown-divider"></div>
 
-                          <a class="dropdown-item" href="{% url 'eboxApp:stock_en_linea' %}">Stock en Línea</a>
-                          <a class="dropdown-item" href="{% url 'eboxApp:despachos_pendientes' %}">Despachos pendientes</a>
+                          <a class="dropdown-item" href="{% url 'eboxApp:stock_en_linea' %}#stock">Stock en Línea</a>
+                          <a class="dropdown-item" href="{% url 'eboxApp:despachos_pendientes' %}#despachospendientes">Despachos pendientes</a>
 
                           <div class="dropdown-divider"></div>
 
-                          <a class="dropdown-item" href="{% url 'eboxApp:buscarTodo' %}">Ver catálogo</a>
-                          <a class="dropdown-item" href="{% url 'eboxApp:buscarTodoRecepcion' %}">Ver compras</a>
-                          <a class="dropdown-item" href="{% url 'eboxApp:buscarTodoEgreso' %}">Ver ventas</a>
+                          <a class="dropdown-item" href="{% url 'eboxApp:buscarTodo' %}#listadocatalogo">Ver catálogo</a>
+                          <a class="dropdown-item" href="{% url 'eboxApp:buscarTodoRecepcion' %}#listadocompras">Ver compras</a>
+                          <a class="dropdown-item" href="{% url 'eboxApp:buscarTodoEgreso' %}#listadoventasyestado">Ver ventas</a>
 
                           <div class="dropdown-divider"></div>
                           
-                          <a class="dropdown-item" href="{% url 'eboxApp:Registro' %}">Regístrate ahora</a>
+                          <a class="dropdown-item" href="{% url 'eboxApp:Registro' %}#nuevoregistro">Regístrate ahora</a>
                       </div>
                   </li>
                   <li class="nav-item active">

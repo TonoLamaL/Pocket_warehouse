@@ -214,11 +214,16 @@ def buscarEgreso(request):
 
 @login_required
 def actualizarEstado(request, id_salida):
+    salida = Salida.objects.get(pk=id_salida)
+
+    if salida.estado.pk == 3:  # si el estado es 'Entregado'
+        messages.warning(request, 'No se puede actualizar el estado de una salida entregada')
+        return redirect('eboxApp:buscarTodoEgreso')
+
     if request.method == 'POST':
         form = SelectEstados(request.POST)
         if form.is_valid():
             nuevo_estado = form.cleaned_data['estado']
-            salida = Salida.objects.get(pk=id_salida)
             unidades = salida.unidades_out  # obtener las unidades de la salida
             inventario = Inventario.objects.get(sku=salida.sku_out)
             if nuevo_estado.pk not in [1, 4, 3]:  # si el estado no es 'Pendiente' o "cancelado"
@@ -233,9 +238,9 @@ def actualizarEstado(request, id_salida):
             salida.save()
             return redirect('eboxApp:buscarTodoEgreso')
     else:
-        salida = Salida.objects.get(pk=id_salida)
         form = SelectEstados(initial={'estado': salida.estado})
     return render(request, 'eboxApp/actualizar_estado.html', {'form': form, 'salida': salida})
+
 
 
 

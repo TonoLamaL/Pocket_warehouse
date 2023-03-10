@@ -1,7 +1,7 @@
 {% extends "eboxApp/base.html" %}
     {% load static %}
 {% block contenido_que_cambia %}
-        <div class="container mt-5">
+        <div class="container mt-5" id="maestra">
             <div class="card">
             <div class="card-body">
                 <h2 class="card-title mb-4 text-center">+ MAESTRA DE PRODUCTOS</h2>
@@ -32,7 +32,7 @@
             </div>
         
 
-            <div class="card mt-4">
+            {% comment %} <div class="card mt-4">
                 <div class="card-body">
                 <h3 class="mb-3">2. Busca un producto por su nombre.</h3>
                 <p style="color: gray;" >Revisa el detalle del producto registrado que estas buscando.</p>
@@ -54,6 +54,6 @@
                 </form>
                 </div>
             </div>
-        </div>
+        </div> {% endcomment %}
 
 {% endblock %}

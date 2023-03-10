@@ -2,13 +2,13 @@
 {% load static %}
 
 {% block contenido_que_cambia %}
-<div class="container">
+<div class="container" id = "listadoventasyestado">
   <div class="card mt-4">
     <div class="card-body">
       <h1 class="text-center my-5">Lista de Egreso de las órdenes de venta</h1>
       <p>Solo el estado "Preparado" descontará las unidades de tu stock en linea</p>
-      <p>El estado cancelado retornará unidades a tu stock - ten cuidado de no hacerlo cuando ya haya sido entregado</p>
-      <p>El estado entregado es solo informativo</p>
+      <p>El estado cancelado retornará unidades a tu stock - si vuelves a activar esta venta puedes pasarlo a preparado nuevamente</p>
+      <p>El estado entregado no puede ser modificado</p>
       {% if salidas %}
       <div class="table-responsive">
         <form method="post">
@@ -39,9 +39,13 @@
                 <td>{{ salida.sku_out.nombre_producto }}</td>
                 <td>{{ salida.unidades_out }}</td>
                 <td>{{ salida.estado.estado }}</td>
+                {% if salida.estado.pk != 3 %}
                 <td>
-                  <a href="{% url 'eboxApp:actualizar_estados' id_salida=salida.pk %}" class="btn btn-primary">Cambiar</a>
-              </td>
+                    <a href="{% url 'eboxApp:actualizar_estados' id_salida=salida.pk %}" class="btn btn-primary">Cambiar</a>
+                </td>
+                {% else %}
+                <td><a class="btn btn-primary">Entregado</a></td>
+                {% endif %}
             </tr>
               {% endfor %}
             </tbody>

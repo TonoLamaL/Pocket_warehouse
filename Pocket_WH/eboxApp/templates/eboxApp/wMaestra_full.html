@@ -7,13 +7,14 @@
 
 {% block contenido_que_cambia %}
 
-<div class="container">
+<div class="container" id = "listadocatalogo">
     <div class="card mt-4">
         <div class="card-body">
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <br> 
                     <h1 class="text-center my-5">Lista de tu Maestra de productos</h1>
+                    <p>Eliminar un producto de tu catálogo, eliminará todos los registros relacionados</p>
                     {% if producto %}
                         <div class="table-responsive">
                             <table class="table">
