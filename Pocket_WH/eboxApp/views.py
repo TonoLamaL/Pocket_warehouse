@@ -240,8 +240,11 @@ def actualizarEstado(request, id_salida):
                     inventario.unidades_preparadas += unidades
                     inventario.tot_unidades -= unidades # actualizar el inventario
                     inventario.save()
-                elif nuevo_estado.pk == 4: # si el estado es "cancelado"
-                    inventario.unidades_reservadas += unidades
+                elif nuevo_estado.pk == 4 and salida.estado.pk == 1: # si el estado es "cancelado"
+                    inventario.unidades_reservadas -= unidades
+
+                    inventario.save()
+                elif nuevo_estado.pk == 4 and salida.estado.pk == 2: # si el estado es "cancelado"
                     inventario.unidades_preparadas -= unidades
                     inventario.tot_unidades += unidades # actualizar el inventario
                     inventario.save()

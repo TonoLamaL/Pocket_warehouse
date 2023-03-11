@@ -39,13 +39,18 @@
                 <td>{{ salida.sku_out.nombre_producto }}</td>
                 <td>{{ salida.unidades_out }}</td>
                 <td>{{ salida.estado.estado }}</td>
-                {% if salida.estado.pk != 3 %}
+                {% if salida.estado.pk != 3 and salida.estado.pk != 4  %}
                 <td>
                     <a href="{% url 'eboxApp:actualizar_estados' id_salida=salida.pk %}#cambiarestado" class="btn btn-primary">Cambiar</a>
                 </td>
                 {% else %}
-                <td><a class="btn btn-success">Entregado</a></td>
+                    {% if salida.estado.pk == 3 %}
+                      <td><a class="btn btn-success">Entregado</a></td>
+                      {% else %}
+                      <td><a class="btn btn-danger">Cancelado</a></td>
                 {% endif %}
+                {% endif %}
+                
             </tr>
               {% endfor %}
             </tbody>
@@ -55,7 +60,7 @@
       {% else %}
       <div class="text-center">
         <h1>No hay datos</h1>
-        <a class="btn btn-warning" href="{% url 'eboxApp:Egreso' %}">Volver</a>
+        <a class="btn btn-warning" href="{% url 'eboxApp:Egreso' %}">Registrar nueva venta</a>
       </div>
       {% endif %}
       
@@ -68,6 +73,6 @@
   <a href="{% url 'eboxApp:stock_en_linea' %}#stock" class="btn btn-primary">Stock en Línea</a>
 </div>
 <div class="text-center">
-  <a class="btn btn-success my-3" href="{% url 'eboxApp:Egreso' %}#ventas">Volver</a>
+  <a class="btn btn-success my-3" href="{% url 'eboxApp:Egreso' %}#ventas">Registrar nueva venta</a>
 </div>
 {% endblock %}
