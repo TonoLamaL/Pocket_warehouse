@@ -4,8 +4,8 @@
 <div class="container mt-5" id = "compras"> 
     <div class="card mt-4">
       <div class="card-body">
-        <h2 class="card-title mb-4 text-center">+ RECEPCIONES</h2>
-        <h3 class="mb-3">1. Ingresa la mercadería que compraste y que ya recibiste.</h3>
+        <h2 class="card-title mb-4 text-center">RECEPCIONES</h2>
+        <h3 class="mb-3">Ingresa la mercadería que compraste y que ya recibiste.</h3>
 
           {% if success %}
           <div class="alert alert-success" role="alert">
@@ -47,16 +47,16 @@
       
       
 
-      {% comment %} <div class="card mt-4">
-        <div class="card-body">
-          <h3 class="mb-3">2. Ver todas las recepciones que haz recibido.</h3>
+      <div class="card mt-4">
+        <div class="card-body text-center">
+          <h3 class="mb-3">Ver todas las recepciones que haz recibido.</h3>
           <p style="color: gray;" >Revisa la lista de tus ingresos.</p>
-          <form action="wRecepcion_full/" method="GET">
+          <form action="wRecepcion_full/#listadocompras" method="GET">
             <button type="submit" class="btn btn-primary">Buscar</button>
           </form>
         </div>
       </div>
-    </div> {% endcomment %}
+    </div>
    
 
 {% endblock %}

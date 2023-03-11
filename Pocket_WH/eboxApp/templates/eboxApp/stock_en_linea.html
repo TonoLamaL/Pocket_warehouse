@@ -14,16 +14,6 @@
           <h1 class="text-center my-4">Stock en línea</h1>
           <h6 class="text-center my-4" aling = "justify-content-center">Aqui verás las mercadería que tienes. No esta descontado lo que aun no preparas. Debes cambiar el estado para descontar unidades.</h6>
 
-          <div class="container my-5">
-            <div class="card mt-4">
-              <div class="card-body">
-                <div class="text-center">
-                  <p>Para cambiar estado entra aquí</p>
-                  <a href="{% url 'eboxApp:buscarTodoEgreso' %}#listadoventasyestado" class="btn btn-primary">Cambiar estados</a>
-              </div>
-            </div>
-          </div>
-        </div>
           <div class="row">
             <div class="col">
               <table class="table">
@@ -33,9 +23,11 @@
                     <th>SKU</th>
                     <th>Nombre del producto</th>
                     <th>Categoría</th>
-                    <th>Unidades totales</th>
-                    <th>Unidades reservadas</th>
-                    <th>Unidades disponibles</th>
+                    <th>Un. totales (reserv + disp)</th>
+                    <th>Un. reservadas pendientes</th>
+                    <th>Un. disponibles</th>
+                    <th>Un. preparadas</th>
+                    <th>Un. entregadas no disponibles</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -48,6 +40,8 @@
                     <td>{{ inventario.tot_unidades }}</td>
                     <td>{{ inventario.unidades_reservadas }}</td>
                     <td>{{ inventario.unidades_disponibles }}</td>
+                    <td>{{ inventario.unidades_preparadas }}</td>
+                    <td>{{ inventario.unidades_entregadas }}</td>
                   </tr>
                   {% endfor %}
                 </tbody>
@@ -62,5 +56,11 @@
         </div>
       </div>
     </div>
+
+          <div class="text-center">
+            <p>Para cambiar estado entra aquí</p>
+            <a href="{% url 'eboxApp:buscarTodoEgreso' %}#listadoventasyestado" class="btn btn-primary">Cambiar estados</a>
+        </div>
+
 
 {% endblock %}

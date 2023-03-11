@@ -2,11 +2,19 @@
 {% load static %}
 
 {% block contenido_que_cambia %}
+
 <div class="container">
   <div class="card mt-4">
     <div class="card-body">
       <h1 class="text-center my-5">Actualizar estado del registro</h1>
       <div class="table-responsive">
+        {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+              <li{% if message.tags %} style="color: red;" class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
         <form method="post">
           {% csrf_token %}
           {{ form.estado }}

@@ -4,8 +4,8 @@
 <div class="container mt-5" id = "ventas">
     <div class="card">
       <div class="card-body">
-        <h2 class="card-title mb-4 text-center">+ EGRESOS</h2>
-        <h3 class="mb-3">1. Ingresa la mercadería que vendiste.</h3>
+        <h2 class="card-title mb-4 text-center">EGRESOS</h2>
+        <h3 class="mb-3">Ingresa la mercadería que vendiste.</h3>
 
             {% if success %} <!--aqui llamo a la variable exitoso de view , que tiene un valor True y asi envio el mensaje -->
             <div class="alert alert-success" role="alert">
@@ -39,16 +39,16 @@
           </form>
         </div>
       </div>
-      {% comment %} <div class="card mt-4">
-        <div class="card-body">
-          <h3 class="mb-3">2. Ver todo el detalle de las ventas.</h3>
+      <div class="card mt-4">
+        <div class="card-body text-center">
+          <h3 class="mb-3">Ver todo el detalle de las ventas.</h3>
           <p style="color: gray;" >Revisa la lista de ventas con sus productos.</p>
-          <form action="wEgreso_full/" method="GET">
+          <form action="wEgreso_full/#listadoventasyestado" method="GET">
             <button type="submit" class="btn btn-primary">Buscar</button>
           </form>
         </div>
       </div>
-    </div> {% endcomment %}
+    </div>
   
 
 {% endblock %}

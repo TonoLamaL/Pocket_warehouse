@@ -214,11 +214,10 @@ def buscarEgreso(request):
 
 @login_required
 def actualizarEstado(request, id_salida):
+    '''funcion para cambiar de estado. cuando esta en pendiente quita unidades disponibles y agrega en reservado
+    si esta en cancelado retorna unidades a reservado, si esta preparado quita unidades disponible y agrega a rpeparado, si esta en entregado quita en disponible
+    y en reservado. solo se puede pasar a entregado desde estado anterior preparado'''
     salida = Salida.objects.get(pk=id_salida)
-
-    if salida.estado.pk == 3:  # si el estado es 'Entregado'
-        messages.warning(request, 'No se puede actualizar el estado de una salida entregada')
-        return redirect('eboxApp:buscarTodoEgreso')
 
     if request.method == 'POST':
         form = SelectEstados(request.POST)
@@ -226,20 +225,34 @@ def actualizarEstado(request, id_salida):
             nuevo_estado = form.cleaned_data['estado']
             unidades = salida.unidades_out  # obtener las unidades de la salida
             inventario = Inventario.objects.get(sku=salida.sku_out)
-            if nuevo_estado.pk not in [1, 4, 3]:  # si el estado no es 'Pendiente' o "cancelado"
-                inventario.unidades_reservadas -= unidades
-                inventario.tot_unidades -= unidades # actualizar el inventario
-                inventario.save()
-            elif nuevo_estado.pk == 4: # si el estado es "cancelado"
-                inventario.unidades_reservadas += unidades
-                inventario.tot_unidades += unidades # actualizar el inventario
-                inventario.save()
-            salida.estado = nuevo_estado
-            salida.save()
-            return redirect('eboxApp:buscarTodoEgreso')
+
+            if nuevo_estado.pk == 3 and salida.estado.pk != 2: # si el estado es "entregado" y la salida no está en estado "Preparado"
+                messages.warning(request, 'No se puede actualizar el estado de una salida entregada que NO esté en estado "Preparado".')
+            else:
+                if nuevo_estado.pk not in [1, 4, 3]:  # si el estado no es 'Pendiente' o "cancelado" o "entregado"
+                    inventario.unidades_reservadas -= unidades
+                    inventario.unidades_preparadas += unidades
+                    inventario.tot_unidades -= unidades # actualizar el inventario
+                    inventario.save()
+                elif nuevo_estado.pk == 4: # si el estado es "cancelado"
+                    inventario.unidades_reservadas += unidades
+                    inventario.unidades_preparadas -= unidades
+                    inventario.tot_unidades += unidades # actualizar el inventario
+                    inventario.save()
+                elif nuevo_estado.pk == 3:# si el estado es "entregado"
+                    inventario.unidades_entregadas += unidades
+                    inventario.unidades_preparadas -= unidades
+                    inventario.save()
+
+                salida.estado_anterior = salida.estado  # almacenar el estado anterior en el campo estado_anterior
+                salida.estado = nuevo_estado
+                salida.save()
+                return redirect('eboxApp:buscarTodoEgreso')
     else:
         form = SelectEstados(initial={'estado': salida.estado})
+
     return render(request, 'eboxApp/actualizar_estado.html', {'form': form, 'salida': salida})
+
 
 
 

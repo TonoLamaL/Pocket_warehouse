@@ -44,7 +44,7 @@
                     <a href="{% url 'eboxApp:actualizar_estados' id_salida=salida.pk %}" class="btn btn-primary">Cambiar</a>
                 </td>
                 {% else %}
-                <td><a class="btn btn-primary">Entregado</a></td>
+                <td><a class="btn btn-success">Entregado</a></td>
                 {% endif %}
             </tr>
               {% endfor %}
@@ -62,8 +62,12 @@
     </div>
   </div>
 </div>
+<br>
 <div class="text-center">
   <p>Para ver el stock en línea</p>
   <a href="{% url 'eboxApp:stock_en_linea' %}#stock" class="btn btn-primary">Stock en Línea</a>
+</div>
+<div class="text-center">
+  <a class="btn btn-success my-3" href="{% url 'eboxApp:Egreso' %}#ventas">Volver</a>
 </div>
 {% endblock %}

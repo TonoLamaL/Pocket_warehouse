@@ -20,7 +20,7 @@ class Recepcion(models.Model):
     fecha_recepcion = models.DateField(null=True)
     
     def __str__(self):
-        return f'{self.pk} (PK) |Contenedor: {self.num_contenedor}   |   Sku: {self.sku_in}   |   Unidades: {self.unidades_in} '
+        return f'{self.pk} (PK) |Contenedor: {self.num_contenedor}   |   Sku: {self.sku_in}   |   Unidades: {self.unidades_in} |   Fecha: {self.fecha_recepcion}'
 
     def save(self, *args, **kwargs):
         '''funcion para actualizar en linea las unidades segun las recepciones a la base de datos de inventario por sku'''
@@ -47,6 +47,7 @@ class Salida(models.Model):
     orden_venta = models.CharField(max_length=100)
     fecha_despacho = models.DateField(null=True)
     estado = models.ForeignKey(Estados, on_delete=models.CASCADE, null=True)
+    estado_anterior = models.ForeignKey(Estados, on_delete=models.CASCADE, related_name='estado_anterior_salida', null=True, blank=True)
     
     def __str__(self):
         return f'{self.pk} (PK) | Sku: {self.sku_out}   |   Unidades: {self.unidades_out}  |  OC: {self.orden_venta} | Pk = {self.pk} | Pk = {self.estado}' 
@@ -70,6 +71,8 @@ class Inventario(models.Model):
     sku = models.ForeignKey(Maestra, on_delete=models.CASCADE, null=True)
     tot_unidades = models.IntegerField(null=True)
     unidades_reservadas = models.IntegerField(default=0)
+    unidades_entregadas = models.IntegerField(default=0)
+    unidades_preparadas = models.IntegerField(default=0)
     unidades_disponibles = models.IntegerField(null=True)
 
     def save(self, *args, **kwargs):
