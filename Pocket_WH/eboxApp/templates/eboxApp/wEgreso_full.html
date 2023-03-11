@@ -41,7 +41,7 @@
                 <td>{{ salida.estado.estado }}</td>
                 {% if salida.estado.pk != 3 %}
                 <td>
-                    <a href="{% url 'eboxApp:actualizar_estados' id_salida=salida.pk %}" class="btn btn-primary">Cambiar</a>
+                    <a href="{% url 'eboxApp:actualizar_estados' id_salida=salida.pk %}#cambiarestado" class="btn btn-primary">Cambiar</a>
                 </td>
                 {% else %}
                 <td><a class="btn btn-success">Entregado</a></td>

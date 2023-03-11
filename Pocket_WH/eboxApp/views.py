@@ -8,6 +8,7 @@ from datetime import date, datetime
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 
 
 
@@ -228,8 +229,13 @@ def actualizarEstado(request, id_salida):
 
             if nuevo_estado.pk == 3 and salida.estado.pk != 2: # si el estado es "entregado" y la salida no está en estado "Preparado"
                 messages.warning(request, 'No se puede actualizar el estado de una salida entregada que NO esté en estado "Preparado".')
+            elif salida.estado.pk in [2,3,4] and nuevo_estado.pk == 1:
+                messages.warning(request, 'No se puede actualizar el estado a pendiente si ya tuvo movimientos.')
+            elif nuevo_estado.pk == salida.estado.pk:
+                messages.warning(request, 'La orden ya esta en este estado.')
             else:
-                if nuevo_estado.pk not in [1, 4, 3]:  # si el estado no es 'Pendiente' o "cancelado" o "entregado"
+                #if nuevo_estado.pk not in [1, 4, 3]:  # si el estado no es 'Pendiente' o "cancelado" o "entregado"
+                if nuevo_estado.pk == 2:  # si el estado es "preparado"
                     inventario.unidades_reservadas -= unidades
                     inventario.unidades_preparadas += unidades
                     inventario.tot_unidades -= unidades # actualizar el inventario
@@ -247,7 +253,10 @@ def actualizarEstado(request, id_salida):
                 salida.estado_anterior = salida.estado  # almacenar el estado anterior en el campo estado_anterior
                 salida.estado = nuevo_estado
                 salida.save()
-                return redirect('eboxApp:buscarTodoEgreso')
+                #otra forma de redirigir a una parte de la pagina 
+                url_destino = reverse('eboxApp:buscarTodoEgreso') + '?id_elemento=#listadoventasyestado'
+                return redirect(url_destino)
+
     else:
         form = SelectEstados(initial={'estado': salida.estado})
 
