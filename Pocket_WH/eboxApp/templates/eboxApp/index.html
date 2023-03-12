@@ -10,7 +10,7 @@
         <div class="col-lg-10  flex-fill" > <!--modificando el numero puedo arreglar el formato del texto, ademas el flex-fluid es buenisim, va relacionado con el d-fluid anterior-->
           <h1 class="my-5" align = 'center'>POCKET WAREHOUSE</h1>
           <p class="my-5">La herramienta perfecta para administrar el inventario de tu negocio. Crea tu maestra de productos, registra tus ingresos y ventas, y lleva un control detallado de tu inventario. Regístrate hoy y comienza a usar Pocket Ware_House.</p>
-          <a class="btn btn-primary" href="{% url 'eboxApp:Registro' %}">Regístrate ahora</a> <!--si href="#signup" hace un hipervinculo a la seccion de comentario que tbn tiene signup-->
+          <a class="btn btn-primary" href="{% url 'eboxApp:Registro' %}#nuevoregistro">Regístrate ahora</a> <!--si href="#signup" hace un hipervinculo a la seccion de comentario que tbn tiene signup-->
         </div>
       </div>
     </div>
@@ -165,7 +165,7 @@
                     <!-- To make this form functional, sign up at-->
                     <!-- https://startbootstrap.com/solution/contact-forms-->
                     <!-- to get an API token!-->
-                    <form class="form-subscribe" id="contactFormFooter" > <!--data-sb-form-api-token="API_TOKEN"-->
+                    <form class="form-subscribe" id="contactFormFooter" action = "{% url 'eboxApp:contacto' %}"> <!--data-sb-form-api-token="API_TOKEN"-->
                         <div class="form mb-3">
                             <input class="form-control" id="name" name="name" type="text" placeholder="Nombre completo" required>
 
@@ -187,7 +187,7 @@
 
                             <div class="invalid-feedback" data-sb-feedback="message:required">Este campo es requerido.</div>
                         </div>
-                        <button class="btn btn-primary btn-lg" id="submitButton" type="submit">Enviar</button>
+                        <button class="btn btn-primary btn-lg"  id="submitButton" type="submit">Enviar</button>
                     </form>
                 </div>
             </div>

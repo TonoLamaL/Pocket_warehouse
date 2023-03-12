@@ -335,6 +335,10 @@ def terms(request):
     """termino y condiciones"""
     return render (request,"eboxApp/terms.html")
 
+def contacto(request):
+    """respuesta a contacto formulario"""
+    return render (request,"eboxApp/contacto.html")
+
  # FUNCIONES DE USO INTENRO AQUI ABAJO llamdas desde la terminal
  
 '''
@@ -345,7 +349,7 @@ from eboxApp.views import migrar_inventario, actualizar_inventariof
 migrar_inventario()
 actualizar_inventario()
 '''
-
+@login_required
 def actualizar_inventario():#agregar request si quiero que sea desde una web:
     '''funcion para actualizar el inventario en unidades - lo necesitaba porque la ultima clase que cree fue inventario'''
     inventario = Inventario.objects.all()
@@ -355,7 +359,7 @@ def actualizar_inventario():#agregar request si quiero que sea desde una web:
         inv.save()
 
     #return HttpResponse ('eboxApp/actualizar_inventario.html')
-
+@login_required
 def migrar_inventario():
     '''Función que actualiza el inventario a partir de los registros en las tablas de Recepcion y Salida
     - lo necesitaba porque la ultima clase que cree fue inventario'''

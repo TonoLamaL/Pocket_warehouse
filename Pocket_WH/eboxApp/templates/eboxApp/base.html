@@ -44,7 +44,7 @@
                     <a class="nav-link" href="#"></a>
                   </li>
                   <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Herramientas <i class="bi bi-list"></i></a>
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Panel de control <i class="bi bi-list"></i></a>
                       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                           <a class="dropdown-item" href="{% url 'eboxApp:Maestra' %}#maestra">Agregar producto al catálogo</a>
                           <a class="dropdown-item" href="{% url 'eboxApp:Recepcion' %}#compras">Agregar compras</a>
@@ -64,6 +64,7 @@
                           <div class="dropdown-divider"></div>
                           
                           <a class="dropdown-item" href="{% url 'eboxApp:Registro' %}#nuevoregistro">Regístrate ahora</a>
+                          <a class="dropdown-item" href="{% url 'eboxApp:about' %}">¿Quienes somos?</a>
                       </div>
                   </li>
                   <li class="nav-item active">
@@ -88,7 +89,7 @@
                 {% else %}
                 <ul class="navbar-nav ml-auto">
                   <li class="nav-item">
-                    <a class="nav-link btn btn-outline-primary" href="{% url 'eboxApp:Login' %}">Iniciar Sesión</a>
+                    <a class="nav-link btn btn-outline-primary" href="{% url 'eboxApp:Login' %}#login">Iniciar Sesión</a>
                   </li>
                 </ul>
                 {% endif %}

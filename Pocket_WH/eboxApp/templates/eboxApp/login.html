@@ -1,7 +1,7 @@
 {% extends "eboxApp/base.html" %}
     {% load static %}
 {% block contenido_que_cambia %}
-        <div class="container mt-5">
+        <div class="container mt-5" id = "login">
             <div class="card">
                 <div class="card-body">
                     <h2 class="card-title mb-4 text-center">INICIA SESIÓN</h2>
@@ -22,7 +22,7 @@
                         </form>
                         <div class="text-center">
                             <p>¿No tienes cuenta?</p>
-                            <a href="{% url 'eboxApp:Registro' %}" class="btn btn-primary">Registrarse</a>
+                            <a href="{% url 'eboxApp:Registro' %}#nuevoregistro" class="btn btn-primary">Registrarse</a>
                         </div>
                 </div>
             </div>
